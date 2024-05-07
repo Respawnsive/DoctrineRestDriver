@@ -85,5 +85,7 @@ class Driver implements DriverInterface {
     public function getExceptionConverter(): ExceptionConverter
     {
         // TODO: Implement getExceptionConverter() method.
+        return new DriverInterface\API\OCI\ExceptionConverter();
+
     }
 }
