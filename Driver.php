@@ -64,7 +64,7 @@ class Driver implements DriverInterface {
      * @param AbstractConnection $conn
      * @param AbstractPlatform $platform
      */
-    public function getSchemaManager(AbstractConnection $conn, AbstractPlatform|\Doctrine\DBAL\Platforms\AbstractPlatform $platform) {
+    public function getSchemaManager(AbstractConnection $conn, AbstractPlatform $platform) {
         return new MySqlSchemaManager($conn);
     }
 
