@@ -21,6 +21,7 @@ namespace Circle\DoctrineRestDriver;
 use Circle\DoctrineRestDriver\Annotations\RoutingTable;
 use Doctrine\DBAL\Driver as DriverInterface;
 use Doctrine\DBAL\Connection as AbstractConnection;
+use Doctrine\DBAL\Driver\API\ExceptionConverter;
 use Doctrine\DBAL\Platforms\MySqlPlatform;
 use Doctrine\DBAL\Schema\MySqlSchemaManager;
 
@@ -78,5 +79,10 @@ class Driver implements DriverInterface {
      */
     public function getDatabase(AbstractConnection $conn) {
         return 'rest_database';
+    }
+
+    public function getExceptionConverter(): ExceptionConverter
+    {
+        // TODO: Implement getExceptionConverter() method.
     }
 }
