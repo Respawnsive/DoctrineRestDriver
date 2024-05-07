@@ -31,7 +31,7 @@ use Doctrine\DBAL\Schema\MySqlSchemaManager;
  * @author    Tobias Hauck <tobias@circle.ai>
  * @copyright 2015 TeeAge-Beatz UG
  */
-class Driver implements \Doctrine\DBAL\Driver {
+class Driver implements Driver {
 
     /**
      * @var Connection
