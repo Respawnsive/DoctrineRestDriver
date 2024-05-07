@@ -22,7 +22,8 @@ use Circle\DoctrineRestDriver\Annotations\RoutingTable;
 use Doctrine\DBAL\Driver as DriverInterface;
 use Doctrine\DBAL\Connection as AbstractConnection;
 use Doctrine\DBAL\Driver\API\ExceptionConverter;
-use Doctrine\DBAL\Platforms\MySqlPlatform;
+use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\DBAL\Platforms\MySQLPlatform;
 use Doctrine\DBAL\Schema\MySqlSchemaManager;
 
 /**
@@ -31,7 +32,7 @@ use Doctrine\DBAL\Schema\MySqlSchemaManager;
  * @author    Tobias Hauck <tobias@circle.ai>
  * @copyright 2015 TeeAge-Beatz UG
  */
-class Driver implements Driver {
+class Driver implements DriverInterface {
 
     /**
      * @var Connection
