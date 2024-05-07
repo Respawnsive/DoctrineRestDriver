@@ -3,6 +3,8 @@
   "description": "Use a REST API as if it was your local database",
   "type": "library",
   "version": "3.0.0",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "authors": [
     {
       "name": "Circle",
@@ -47,6 +49,13 @@
     "php": ">=5.5",
     "doctrine/dbal": "^3",
     "greenlion/php-sql-parser": "^4.0",
-    "doctrine/orm": "^3"
-  }
+    "doctrine/orm": "^3",
+    "ci/restclientbundle": "^3.0"
+  },
+  "repositories": [
+    {
+      "url": "https://github.com/davidnurdin/CiRestClientBundle.git",
+      "type": "git"
+    }
+  ]
 }
