@@ -18,7 +18,13 @@
 
 namespace Circle\DoctrineRestDriver\Tests;
 
+use Doctrine\DBAL\Connection as AbstractConnection;
+use Circle\DoctrineRestDriver\Connection;
 use Circle\DoctrineRestDriver\Driver;
+use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\DBAL\Schema\MySqlSchemaManager ;
+
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests the driver
@@ -28,7 +34,7 @@ use Circle\DoctrineRestDriver\Driver;
  *
  * @coversDefaultClass Circle\DoctrineRestDriver\Driver
  */
-class DriverTest extends \PHPUnit\Framework\TestCase {
+class DriverTest extends TestCase {
 
     /**
      * @var Driver
@@ -58,8 +64,13 @@ class DriverTest extends \PHPUnit\Framework\TestCase {
      * @covers ::getSchemaManager
      */
     public function getSchemaManager() {
-        $connection = $this->getMockBuilder('Circle\DoctrineRestDriver\Connection')->disableOriginalConstructor()->getMock();
-        $this->assertInstanceOf('Doctrine\DBAL\Schema\MySqlSchemaManager', $this->driver->getSchemaManager($connection));
+//        $connection = $this->driver->connect([]) ;
+        // Circle\DoctrineRestDriver\Connection
+        // TODO : david voir
+        $connection = $this->getMockBuilder(Connection::class)->disableOriginalConstructor()->getMock() ;
+        $platform = $this->getMockBuilder(AbstractPlatform::class)->disableOriginalConstructor()->getMock();
+        $actual =  $this->driver->getSchemaManager($connection,$platform) ;
+        $this->assertInstanceOf(MySqlSchemaManager::class,$actual);
     }
 
     /**

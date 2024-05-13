@@ -25,6 +25,7 @@ use Doctrine\DBAL\Driver\API\ExceptionConverter;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Platforms\MySQLPlatform;
 use Doctrine\DBAL\Schema\MySqlSchemaManager;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Rest driver class
@@ -66,7 +67,7 @@ class Driver implements DriverInterface {
      * @param AbstractPlatform $platform
      */
     public function getSchemaManager(AbstractConnection $conn, AbstractPlatform $platform) {
-        return new MySqlSchemaManager($conn);
+        return new MySqlSchemaManager($conn,$platform);
     }
 
     /**
