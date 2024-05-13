@@ -39,7 +39,7 @@ class OrderingHeadersTest extends \PHPUnit\Framework\TestCase {
     /**
      * {@inheritdoc}
      */
-    public function setUp() {
+    public function setUp() : void {
         $this->expected = [
             'Order: name ASC',
         ];

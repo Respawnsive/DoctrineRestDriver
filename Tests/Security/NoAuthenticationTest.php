@@ -40,7 +40,7 @@ class NoAuthenticationTest extends \PHPUnit\Framework\TestCase {
     /**
      * {@inheritdoc}
      */
-    public function setUp() {
+    public function setUp() : void {
         $this->authentication = new NoAuthentication([
             'host'          => 'http://circle.ai',
             'user'          => 'Aladdin',

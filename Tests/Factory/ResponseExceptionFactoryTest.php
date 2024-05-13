@@ -25,16 +25,17 @@ use Doctrine\DBAL\Exception as DBALException;
 
 /**
  * @coversDefaultClass Circle\DoctrineRestDriver\Factory\ResponseExceptionFactory
- * 
+ *
  * @author Rob Treacy <robert.treacy@thesalegroup.co.uk>
  */
 class ResponseExceptionFactoryTest extends \PHPUnit\Framework\TestCase {
     private $responseExceptionFactory;
-    
-    public function setUp() {
+
+    public function setUp(): void
+    {
         $this->responseExceptionFactory = new ResponseExceptionFactory;
     }
-    
+
     /**
      * @test
      * @group  unit
@@ -45,7 +46,7 @@ class ResponseExceptionFactoryTest extends \PHPUnit\Framework\TestCase {
         $return = $this->responseExceptionFactory->createDbalException($response, $this->createMock($expectedExceptionClass));
         $this->assertInstanceOf(DriverExceptionInterface::class, $return);
     }
-    
+
     /**
      * Data provider for createDbalException test
      */
@@ -67,7 +68,7 @@ class ResponseExceptionFactoryTest extends \PHPUnit\Framework\TestCase {
             [$this->createResponseFromCode(Response::HTTP_OK), DBALException\DriverException::class],
         );
     }
-    
+
     private function createResponseFromCode($responseCode) {
         return new Response('', $responseCode);
     }

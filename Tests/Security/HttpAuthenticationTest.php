@@ -40,7 +40,7 @@ class HttpAuthenticationTest extends \PHPUnit\Framework\TestCase {
     /**
      * {@inheritdoc}
      */
-    public function setUp() {
+    public function setUp() : void {
         $this->authentication = new HttpAuthentication([
             'host'          => 'http://circle.ai',
             'user'          => 'Aladdin',

@@ -3,7 +3,7 @@
   "description": "Use a REST API as if it was your local database",
   "type": "library",
   "version": "3.0.0",
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "prefer-stable": true,
   "authors": [
     {
@@ -18,14 +18,14 @@
     "GPL"
   ],
   "require-dev": {
-    "symfony/expression-language": "^3.0",
+    "symfony/expression-language": "^7",
     "phpmd/phpmd" : "@stable",
     "phpunit/phpunit" : "@stable",
-    "symfony/yaml": "3.*",
-    "sensio/framework-extra-bundle": "3.*",
-    "symfony/framework-bundle": "3.*",
-    "doctrine/doctrine-bundle": "^1.6",
-    "symfony/validator": "3.*"
+    "symfony/yaml": "^7",
+    "sensio/framework-extra-bundle": "^6",
+    "symfony/framework-bundle": "^6",
+    "doctrine/doctrine-bundle": "^2",
+    "symfony/validator": "^7"
   },
   "autoload": {
     "psr-0": {
@@ -51,5 +51,11 @@
     "greenlion/php-sql-parser": "^4.0",
     "doctrine/orm": "^3",
     "ci/restclientbundle": "^3"
-  }
+  },
+  "repositories": [
+    {
+      "url": "/home/david/poc/ci_rest_client/CiRestClientBundle",
+      "type": "path"
+    }
+  ]
 }

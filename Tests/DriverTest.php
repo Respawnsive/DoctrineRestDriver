@@ -38,7 +38,8 @@ class DriverTest extends \PHPUnit\Framework\TestCase {
     /**
      * {@inheritdoc}
      */
-    public function setUp() {
+    public function setUp(): void
+    {
         $this->driver = new Driver();
     }
 

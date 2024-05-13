@@ -41,7 +41,8 @@ class RestClientTest extends \PHPUnit\Framework\TestCase {
     /**
      * {@inheritdoc}
      */
-    public function setUp() {
+    public function setUp(): void
+    {
         $this->restClient = new RestClient();
     }
 
