@@ -49,6 +49,7 @@ class Driver implements DriverInterface {
 
         $metaData         = new MetaData();
         $this->connection = new Connection($params, $this, new RoutingTable($metaData->getEntityNamespaces()));
+
         return $this->connection;
     }
 

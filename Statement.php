@@ -29,7 +29,7 @@ use Circle\DoctrineRestDriver\Types\Result;
 use Circle\DoctrineRestDriver\Types\SqlQuery;
 use Circle\DoctrineRestDriver\Validation\Assertions;
 use Doctrine\DBAL\Driver\Statement as StatementInterface;
-
+use Doctrine\DBAL\Driver\Result as ResultInterface ;
 /**
  * Executes the statement - sends requests to an api
  *
@@ -38,7 +38,7 @@ use Doctrine\DBAL\Driver\Statement as StatementInterface;
  *
  * @SuppressWarnings("PHPMD.TooManyPublicMethods")
  */
-class Statement implements \IteratorAggregate, StatementInterface {
+class Statement implements StatementInterface {
 
     /**
      * @var string
@@ -157,7 +157,8 @@ class Statement implements \IteratorAggregate, StatementInterface {
      *
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
-    public function execute($params = null) {
+    public function execute($params = null): ResultInterface
+    {
         $query   = SqlQuery::setParams($this->query, $params !== null ? $params : $this->params);
         $request = $this->authStrategy->transformRequest($this->mysqlToRequest->transform($query));
 
@@ -239,12 +240,13 @@ class Statement implements \IteratorAggregate, StatementInterface {
         return Exceptions::MethodNotImplementedException(get_class($this), 'fetchColumn');
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getIterator() {
-        return $this->query;
-    }
+
+//    /**
+//     * {@inheritdoc}
+//     */
+//    public function getIterator() {
+//        return $this->query;
+//    }
 
     /**
      * Returns the last auto incremented id

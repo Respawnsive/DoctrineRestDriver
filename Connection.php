@@ -21,15 +21,20 @@ namespace Circle\DoctrineRestDriver;
 use Circle\DoctrineRestDriver\Annotations\RoutingTable;
 use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Configuration;
-use Doctrine\DBAL\Connection as AbstractConnection;
+use Doctrine\DBAL\Driver\Exception;
+use Doctrine\DBAL\Driver\ServerInfoAwareConnection; // TODO voir
+use Doctrine\DBAL\ParameterType;
+use Doctrine\DBAL\Driver\Statement as StatementInterface;
+use Doctrine\DBAL\Driver\Result as ResultInterface;
 
 /**
  * Doctrine connection for the rest driver
  *
  * @author    Tobias Hauck <tobias@circle.ai>
  * @copyright 2015 TeeAge-Beatz UG
+ * @method object getNativeConnection()
  */
-class Connection extends AbstractConnection {
+class Connection implements ServerInfoAwareConnection {
 
     /**
      * @var Statement
@@ -50,21 +55,25 @@ class Connection extends AbstractConnection {
      */
     public function __construct(array $params, Driver $driver, RoutingTable $routings, Configuration $config = null, EventManager $eventManager = null) {
         $this->routings = $routings;
-        parent::__construct($params, $driver, $config, $eventManager);
+        $this->driver = $driver ;
+        $this->params = $params ;
+//        parent::__construct($params, $driver, $config, $eventManager);
     }
 
     /**
      * prepares the statement execution
      *
-     * @param  string $statement
-     * @return Statement
+     * @param string $statement
+     * @return \Doctrine\DBAL\Driver\Statement
+     * @throws Exception
      */
-    public function prepare(string $sql): \Doctrine\DBAL\Statement
+    public function prepare(string $sql): StatementInterface
     {
-        $this->connect();
+        $this->driver->connect($this->params);
+        $this->statement = new Statement($sql, $this->params, $this->routings);
+        $this->statement->setFetchMode(\PDO::FETCH_ASSOC); // TODO voir
 
-        $this->statement = new Statement($sql, $this->getParams(), $this->routings);
-        $this->statement->setFetchMode($this->defaultFetchMode);
+            // $this->defaultFetchMode);
 
         return $this->statement;
     }
@@ -84,12 +93,54 @@ class Connection extends AbstractConnection {
     /**
      * Executes a query, returns a statement
      *
+     * @param string $sql
      * @return Statement
      */
-    public function query() {
+    public function query(string $sql): ResultInterface
+    {
         $statement = $this->prepare(func_get_args()[0]);
         $statement->execute();
 
         return $statement;
+    }
+
+    public function quote($value, $type = ParameterType::STRING)
+    {
+        // TODO: Implement quote() method.
+    }
+
+    public function exec(string $sql): int
+    {
+        // TODO: Implement exec() method.
+    }
+
+    public function beginTransaction()
+    {
+        // TODO: Implement beginTransaction() method.
+        return true ;
+    }
+
+    public function commit()
+    {
+        // TODO: Implement commit() method.
+        return true ;
+    }
+
+    public function rollBack()
+    {
+        // TODO: Implement rollBack() method.
+        return true ;
+    }
+
+//    public function __call(string $name, array $arguments)
+//    {
+//        // TODO: Implement @method object getNativeConnection()
+//        return true ;
+//    }
+
+    public function getServerVersion()
+    {
+        // TODO: Implement getServerVersion() method.
+        return "1.0" ;
     }
 }

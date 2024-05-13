@@ -51,5 +51,11 @@
     "greenlion/php-sql-parser": "^4.0",
     "doctrine/orm": "^3",
     "ci/restclientbundle": "^3"
-  }
+  },
+  "repositories": [
+    {
+      "url": "https://github.com/davidnurdin/CiRestClientBundle.git",
+      "type": "git"
+    }
+  ]
 }
