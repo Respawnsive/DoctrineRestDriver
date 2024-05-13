@@ -31,6 +31,9 @@
     "psr-0": {
       "Circle\\DoctrineRestDriver": ""
     },
+    "psr-4": {
+      "Circle\\RestClientBundle\\": "vendor/ci/restclientbundle/"
+    },
     "files": [
       "Annotations/Delete.php",
       "Annotations/Fetch.php",
