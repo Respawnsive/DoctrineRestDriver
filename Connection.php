@@ -59,10 +59,11 @@ class Connection extends AbstractConnection {
      * @param  string $statement
      * @return Statement
      */
-    public function prepare($statement) {
+    public function prepare(string $sql): \Doctrine\DBAL\Statement
+    {
         $this->connect();
 
-        $this->statement = new Statement($statement, $this->getParams(), $this->routings);
+        $this->statement = new Statement($sql, $this->getParams(), $this->routings);
         $this->statement->setFetchMode($this->defaultFetchMode);
 
         return $this->statement;
