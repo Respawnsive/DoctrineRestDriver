@@ -25,7 +25,6 @@ use Doctrine\DBAL\Driver\API\ExceptionConverter;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Platforms\MySQLPlatform;
 use Doctrine\DBAL\Schema\MySqlSchemaManager;
-use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Rest driver class

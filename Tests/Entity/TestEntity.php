@@ -29,10 +29,12 @@ use Circle\DoctrineRestDriver\Annotations as DataSource;
  * @author    Tobias Hauck <tobias@circle.ai>
  * @copyright 2015 TeeAge-Beatz UG
  *
- * @ORM\Entity
- * @ORM\Table(name="products")
- * @DataSource\Select("http://127.0.0.1:3000/app_dev.php/mockapi/products")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'products')]
+//#[DataSource\Select(["value" => "http://127.0.0.1:3000/app_dev.php/mockapi/products"])] // TODO voir pour que ca prenne directement la valeur !
+//#[DataSource\Select("http://127.0.0.1:3000/app_dev.php/mockapi/products")] // TODO voir pour que ca prenne directement la valeur !
+#[DataSource\Select("http://127.0.0.1:3000/app_dev.php/mockapi/products")] // TODO voir pour que ca prenne directement la valeur !
 class TestEntity {
     /**
      * @ORM\Column(type="integer")

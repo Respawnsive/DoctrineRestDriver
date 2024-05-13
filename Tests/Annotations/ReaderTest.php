@@ -20,7 +20,9 @@ namespace Circle\DoctrineRestDriver\Tests\Annotations;
 
 use Circle\DoctrineRestDriver\Annotations\Reader;
 use Circle\DoctrineRestDriver\Annotations\Select;
+use Circle\DoctrineRestDriver\Tests\Entity\TestEntity;
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use ReflectionClass;
 
 /**
  * Tests the annotation reader
@@ -39,18 +41,18 @@ class ReaderTest extends \PHPUnit\Framework\TestCase {
      */
     public function setUp(): void
     {
-        AnnotationRegistry::registerFile(__DIR__ . '/../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Entity.php');
-        AnnotationRegistry::registerFile(__DIR__ . '/../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Table.php');
-        AnnotationRegistry::registerFile(__DIR__ . '/../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Column.php');
-        AnnotationRegistry::registerFile(__DIR__ . '/../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Id.php');
-        AnnotationRegistry::registerFile(__DIR__ . '/../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/GeneratedValue.php');
-        AnnotationRegistry::registerFile(__DIR__ . '/../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/OneToMany.php');
-        AnnotationRegistry::registerFile(__DIR__ . '/../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/ManyToOne.php');
-        AnnotationRegistry::registerFile(__DIR__ . '/../../Annotations/Insert.php');
-        AnnotationRegistry::registerFile(__DIR__ . '/../../Annotations/Update.php');
-        AnnotationRegistry::registerFile(__DIR__ . '/../../Annotations/Select.php');
-        AnnotationRegistry::registerFile(__DIR__ . '/../../Annotations/Delete.php');
-        AnnotationRegistry::registerFile(__DIR__ . '/../../Annotations/Fetch.php');
+//        AnnotationRegistry::registerFile(__DIR__ . '/../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Entity.php');
+//        AnnotationRegistry::registerFile(__DIR__ . '/../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Table.php');
+//        AnnotationRegistry::registerFile(__DIR__ . '/../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Column.php');
+//        AnnotationRegistry::registerFile(__DIR__ . '/../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Id.php');
+//        AnnotationRegistry::registerFile(__DIR__ . '/../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/GeneratedValue.php');
+//        AnnotationRegistry::registerFile(__DIR__ . '/../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/OneToMany.php');
+//        AnnotationRegistry::registerFile(__DIR__ . '/../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/ManyToOne.php');
+//        AnnotationRegistry::registerFile(__DIR__ . '/../../Annotations/Insert.php');
+//        AnnotationRegistry::registerFile(__DIR__ . '/../../Annotations/Update.php');
+//        AnnotationRegistry::registerFile(__DIR__ . '/../../Annotations/Select.php');
+//        AnnotationRegistry::registerFile(__DIR__ . '/../../Annotations/Delete.php');
+//        AnnotationRegistry::registerFile(__DIR__ . '/../../Annotations/Fetch.php');
     }
 
     /**
@@ -61,11 +63,12 @@ class ReaderTest extends \PHPUnit\Framework\TestCase {
      */
     public function getRoute() {
         $reader   = new Reader();
-        $class    = new \ReflectionClass('Circle\DoctrineRestDriver\Tests\Entity\TestEntity');
+        $class    = new ReflectionClass(TestEntity::class);
         $expected = new Select([
             'value' => 'http://127.0.0.1:3000/app_dev.php/mockapi/products'
         ]);
 
-        $this->assertEquals($expected, $reader->read($class, 'Circle\DoctrineRestDriver\Annotations\Select'));
+        $actual = $reader->read($class, Select::class) ;
+        $this->assertEquals($expected, $actual);
     }
 }

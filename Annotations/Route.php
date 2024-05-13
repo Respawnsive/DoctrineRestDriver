@@ -60,13 +60,25 @@ trait Route {
      *
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
-    public function __construct(array $values) {
-        $settings = new ArrayCollection($values);
+    public function __construct($arrayOrUri,$statusCodes = null,$method = null,$options = [] ) {
+        $values = $arrayOrUri;
 
-        $this->route      = Url::assert($settings->get('value'), 'value');
-        $this->statusCodes = MaybeList::assert($settings->get('statusCodes'), 'statusCodes');
-        $this->method     = MaybeString::assert($settings->get('method'), 'method');
-        $this->options    = MaybeList::assert($settings->get('options'), 'options');
+        if (is_array($values)) {
+            $settings = new ArrayCollection($values);
+            $this->route = Url::assert($settings->get('value'), 'value');
+            $this->statusCodes = MaybeList::assert($settings->get('statusCodes'), 'statusCodes');
+            $this->method = MaybeString::assert($settings->get('method'), 'method');
+            $this->options = MaybeList::assert($settings->get('options'), 'options');
+            if ($this->options === null)
+                $this->options = [] ;
+
+        }
+        elseif (is_string($values)) {
+            $this->route = Url::assert($values, 'value');
+            $this->statusCodes = $statusCodes;
+            $this->method = $method;
+            $this->options = $options;
+        }
     }
 
     /**

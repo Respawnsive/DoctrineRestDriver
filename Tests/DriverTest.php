@@ -64,9 +64,7 @@ class DriverTest extends TestCase {
      * @covers ::getSchemaManager
      */
     public function getSchemaManager() {
-//        $connection = $this->driver->connect([]) ;
-        // Circle\DoctrineRestDriver\Connection
-        // TODO : david voir
+//        $connection = $this->driver->connect([],null,null,[]) ;
         $connection = $this->getMockBuilder(Connection::class)->disableOriginalConstructor()->getMock() ;
         $platform = $this->getMockBuilder(AbstractPlatform::class)->disableOriginalConstructor()->getMock();
         $actual =  $this->driver->getSchemaManager($connection,$platform) ;
@@ -88,7 +86,7 @@ class DriverTest extends TestCase {
      * @covers ::getDatabase
      */
     public function getDatabase() {
-        $connection = $this->getMockBuilder('Circle\DoctrineRestDriver\Connection')->disableOriginalConstructor()->getMock();
+        $connection = $this->getMockBuilder(Connection::class)->disableOriginalConstructor()->getMock() ;
         $this->assertSame('rest_database', $this->driver->getDatabase($connection));
     }
 

@@ -33,7 +33,8 @@ class AppKernel extends Kernel {
      *
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
-    public function registerBundles() {
+    public function registerBundles(): iterable
+    {
         return array(
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
@@ -48,17 +49,24 @@ class AppKernel extends Kernel {
         return __DIR__;
     }
 
+    public function getProjectDir(): string
+    {
+       return $this->getRootDir();
+    }
+
     /**
      * {@inheritdoc}
      */
-    public function getCacheDir() {
+    public function getCacheDir(): string
+    {
         return dirname(__DIR__).'/app/var/cache/'.$this->getEnvironment();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getLogDir() {
+    public function getLogDir(): string
+    {
         return dirname(__DIR__).'/app/var/logs';
     }
 

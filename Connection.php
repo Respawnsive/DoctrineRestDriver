@@ -24,8 +24,9 @@ use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Driver\Exception;
 use Doctrine\DBAL\Driver\ServerInfoAwareConnection; // TODO voir
 use Doctrine\DBAL\ParameterType;
-use Doctrine\DBAL\Driver\Statement as StatementInterface;
-use Doctrine\DBAL\Driver\Result as ResultInterface;
+use Doctrine\DBAL\Connection as ConnectionInterface;
+use Doctrine\DBAL\Statement as StatementInterface;
+use Doctrine\DBAL\Result as ResultInterface;
 
 /**
  * Doctrine connection for the rest driver
@@ -34,7 +35,8 @@ use Doctrine\DBAL\Driver\Result as ResultInterface;
  * @copyright 2015 TeeAge-Beatz UG
  * @method object getNativeConnection()
  */
-class Connection implements ServerInfoAwareConnection {
+class Connection extends ConnectionInterface
+{
 
     /**
      * @var Statement
@@ -112,6 +114,7 @@ class Connection implements ServerInfoAwareConnection {
     public function exec(string $sql): int
     {
         // TODO: Implement exec() method.
+        return true ;
     }
 
     public function beginTransaction()
