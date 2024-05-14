@@ -29,6 +29,7 @@ use Doctrine\DBAL\Driver\Result as ResultInterface ;
 class DriverConnection implements \Doctrine\DBAL\Driver\Connection,ServerInfoAwareConnection
 {
 
+    private $defaultFetchMode = \PDO::FETCH_ASSOC; // default fetch mode
     protected Statement $statement ;
 
     public function __construct(array $params, Driver $driver, RoutingTable $routings, Configuration $config = null, EventManager $eventManager = null)
