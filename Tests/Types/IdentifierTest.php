@@ -21,6 +21,10 @@ namespace Circle\DoctrineRestDriver\Tests\Types;
 use Circle\DoctrineRestDriver\Types\Identifier;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use PHPSQLParser\PHPSQLParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversMethod;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Tests the identifier type
@@ -30,15 +34,18 @@ use PHPSQLParser\PHPSQLParser;
  *
  * @coversDefaultClass Circle\DoctrineRestDriver\Types\Identifier
  */
+#[CoversClass(Identifier::class)]
+#[CoversMethod(Identifier::class,'create')]
+#[CoversMethod(Identifier::class,'alias')]
+#[CoversMethod(Identifier::class,'column')]
 class IdentifierTest extends \PHPUnit\Framework\TestCase {
 
     /**
-     * @test
-     * @group  unit
-     * @covers ::create
      *
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
+    #[Test]
+    #[Group('unit')]
     public function create() {
         $parser = new PHPSQLParser();
         $tokens = $parser->parse('SELECT name FROM products WHERE id=1');
@@ -47,12 +54,11 @@ class IdentifierTest extends \PHPUnit\Framework\TestCase {
     }
 
     /**
-     * @test
-     * @group  unit
-     * @covers ::create
      *
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
+    #[Test]
+    #[Group('unit')]
     public function createWithStringId() {
         $parser = new PHPSQLParser();
         $tokens = $parser->parse('SELECT name FROM products WHERE id="test"');
@@ -61,12 +67,11 @@ class IdentifierTest extends \PHPUnit\Framework\TestCase {
     }
 
     /**
-     * @test
-     * @group  unit
-     * @covers ::create
      *
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
+    #[Test]
+    #[Group('unit')]
     public function createWithStringIdSingleQuotes() {
         $parser = new PHPSQLParser();
         $tokens = $parser->parse('SELECT name FROM products WHERE id=\'test\'');
@@ -75,12 +80,11 @@ class IdentifierTest extends \PHPUnit\Framework\TestCase {
     }
 
     /**
-     * @test
-     * @group  unit
-     * @covers ::create
      *
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
+    #[Test]
+    #[Group('unit')]
     public function createWithStringIdNoQuotes() {
         $parser = new PHPSQLParser();
         $tokens = $parser->parse('SELECT name FROM products WHERE id=test');
@@ -89,12 +93,11 @@ class IdentifierTest extends \PHPUnit\Framework\TestCase {
     }
 
     /**
-     * @test
-     * @group  unit
-     * @covers ::create
      *
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
+    #[Test]
+    #[Group('unit')]
     public function createWithEmptyId() {
         $parser = new PHPSQLParser();
         $tokens = $parser->parse('SELECT name FROM products WHERE name="test"');
@@ -103,12 +106,11 @@ class IdentifierTest extends \PHPUnit\Framework\TestCase {
     }
 
     /**
-     * @test
-     * @group  unit
-     * @covers ::alias
      *
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
+    #[Test]
+    #[Group('unit')]
     public function alias() {
         $parser = new PHPSQLParser();
         $tokens = $parser->parse('SELECT name FROM products WHERE id=1');
@@ -117,12 +119,11 @@ class IdentifierTest extends \PHPUnit\Framework\TestCase {
     }
 
     /**
-     * @test
-     * @group  unit
-     * @covers ::column
      *
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
+    #[Test]
+    #[Group('unit')]
     public function column() {
         $parser = new PHPSQLParser();
         $tokens = $parser->parse('SELECT name FROM products WHERE id=1');
@@ -131,17 +132,17 @@ class IdentifierTest extends \PHPUnit\Framework\TestCase {
         $metaDataEntry
             ->expects($this->once())
             ->method('getTableName')
-            ->will($this->returnValue('products'));
+            ->willReturn('products');
         $metaDataEntry
             ->expects($this->once())
             ->method('getIdentifierColumnNames')
-            ->will($this->returnValue(['testId']));
+            ->willReturn(['testId']);
 
         $metaData = $this->getMockBuilder('Circle\DoctrineRestDriver\MetaData')->disableOriginalConstructor()->getMock();
         $metaData
             ->expects($this->once())
             ->method('get')
-            ->will($this->returnValue([$metaDataEntry]));
+            ->willReturn([$metaDataEntry]);
 
         $this->assertSame('testId', Identifier::column($tokens, $metaData));
     }

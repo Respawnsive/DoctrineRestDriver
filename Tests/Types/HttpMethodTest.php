@@ -43,7 +43,7 @@ class HttpMethodTest extends \PHPUnit\Framework\TestCase {
         $annotation
             ->expects($this->exactly(2))
             ->method('getMethod')
-            ->will($this->returnValue(HttpMethods::PUT));
+            ->willReturn(HttpMethods::PUT);
 
         $this->assertSame(HttpMethods::PUT, HttpMethod::create(HttpMethods::POST, $annotation));
     }
@@ -60,7 +60,7 @@ class HttpMethodTest extends \PHPUnit\Framework\TestCase {
         $annotation
             ->expects($this->once())
             ->method('getMethod')
-            ->will($this->returnValue(null));
+            ->willReturn(null);
 
         $this->assertSame(HttpMethods::POST, HttpMethod::create(HttpMethods::POST, $annotation));
     }

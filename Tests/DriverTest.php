@@ -26,6 +26,10 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Platforms\MySQLPlatform;
 use Doctrine\DBAL\Schema\MySQLSchemaManager ;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversMethod;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -34,8 +38,13 @@ use PHPUnit\Framework\TestCase;
  * @author    Tobias Hauck <tobias@circle.ai>
  * @copyright 2015 TeeAge-Beatz UG
  *
- * @coversDefaultClass Circle\DoctrineRestDriver\Driver
  */
+#[CoversClass(Driver::class)]
+#[CoversMethod(Driver::class,'getDatabasePlatform')]
+#[CoversMethod(Driver::class,'getSchemaManager')]
+#[CoversMethod(Driver::class,'getName')]
+#[CoversMethod(Driver::class,'getDatabase')]
+#[CoversMethod(Driver::class,'connect')]
 class DriverTest extends TestCase {
 
     /**
@@ -51,20 +60,14 @@ class DriverTest extends TestCase {
         $this->driver = new Driver();
     }
 
-    /**
-     * @test
-     * @group  unit
-     * @covers ::getDatabasePlatform
-     */
+    #[Test]
+    #[Group('unit')]
     public function getDatabasePlatform() {
         $this->assertInstanceOf(MySQLPlatform::class, $this->driver->getDatabasePlatform());
     }
 
-    /**
-     * @test
-     * @group  unit
-     * @covers ::getSchemaManager
-     */
+    #[Test]
+    #[Group('unit')]
     public function getSchemaManager() {
         $connection = $this->getMockBuilder(Connection::class)->disableOriginalConstructor()->getMock() ;
         $platform = $this->getMockBuilder(AbstractPlatform::class)->disableOriginalConstructor()->getMock();
@@ -72,31 +75,21 @@ class DriverTest extends TestCase {
         $this->assertInstanceOf(MySQLSchemaManager::class,$actual);
     }
 
-    /**
-     * @test
-     * @group  unit
-     * @covers ::getName
-     */
+    #[Test]
+    #[Group('unit')]
     public function getNameTest() {
         $this->assertSame('circle_rest', $this->driver->getName());
     }
 
-    /**
-     * @test
-     * @group  unit
-     * @covers ::getDatabase
-     */
+    #[Test]
+    #[Group('unit')]
     public function getDatabase() {
         $connection = $this->getMockBuilder(Connection::class)->disableOriginalConstructor()->getMock() ;
         $this->assertSame('rest_database', $this->driver->getDatabase($connection));
     }
 
-    /**
-     * @test
-     * @group  unit
-     * @covers ::connect
-     * @covers ::<private>
-     */
+    #[Test]
+    #[Group('unit')]
     public function connect() {
         $params = [
             'driverClass'   => 'Circle\DoctrineRestDriver\Driver',

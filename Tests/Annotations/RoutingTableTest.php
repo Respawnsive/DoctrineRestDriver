@@ -21,6 +21,10 @@ namespace Circle\DoctrineRestDriver\Tests\Annotations;
 use Circle\DoctrineRestDriver\Annotations\Routing;
 use Circle\DoctrineRestDriver\Annotations\RoutingTable;
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversMethod;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Tests the routing table
@@ -28,8 +32,11 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
  * @author    Tobias Hauck <tobias@circle.ai>
  * @copyright 2015 TeeAge-Beatz UG
  *
- * @coversDefaultClass Circle\DoctrineRestDriver\Annotations\RoutingTable
  */
+#[CoversClass(RoutingTable::class)]
+#[CoversMethod(RoutingTable::class,'__construct')]
+#[CoversMethod(RoutingTable::class,'get')]
+//#[CoversMethod(RoutingTable::class,'<private>')]
 class RoutingTableTest extends \PHPUnit\Framework\TestCase {
 
     /**
@@ -53,13 +60,8 @@ class RoutingTableTest extends \PHPUnit\Framework\TestCase {
 //        AnnotationRegistry::registerFile(__DIR__ . '/../../Annotations/Fetch.php');
     }
 
-    /**
-     * @test
-     * @group  unit
-     * @covers ::__construct
-     * @covers ::get
-     * @covers ::<private>
-     */
+    #[Test]
+    #[Group('unit')]
     public function get() {
         $entities = [
             'categories'     => 'Circle\DoctrineRestDriver\Tests\Entity\AssociatedEntity',

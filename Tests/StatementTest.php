@@ -19,6 +19,10 @@
 namespace Circle\DoctrineRestDriver\Tests;
 
 use Circle\DoctrineRestDriver\Statement;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversMethod;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Tests the statement
@@ -26,8 +30,15 @@ use Circle\DoctrineRestDriver\Statement;
  * @author    Tobias Hauck <tobias@circle.ai>
  * @copyright 2015 TeeAge-Beatz UG
  *
- * @coversDefaultClass Circle\DoctrineRestDriver\Statement
  */
+#[CoversClass(Statement::class)]
+#[CoversMethod(Statement::class,'bindParam')]
+#[CoversMethod(Statement::class,'errorInfo')]
+#[CoversMethod(Statement::class,'errorCode')]
+#[CoversMethod(Statement::class,'columnCount')]
+#[CoversMethod(Statement::class,'fetchColumn')]
+#[CoversMethod(Statement::class,'getIterator')]
+#[CoversMethod(Statement::class,'fetchAll')]
 class StatementTest extends \PHPUnit\Framework\TestCase {
 
     /**
@@ -43,7 +54,7 @@ class StatementTest extends \PHPUnit\Framework\TestCase {
         $routings
             ->expects($this->any())
             ->method('get')
-            ->will($this->returnValue(null));
+            ->willReturn(null);
 
         $params = [
             'host'          => 'http://www.circle.ai',
@@ -56,81 +67,54 @@ class StatementTest extends \PHPUnit\Framework\TestCase {
         $this->statement = new Statement('SELECT name FROM product WHERE id=1', $params, $routings);
     }
 
-    /**
-     * @test
-     * @group unit
-     * @expectedException \Exception
-     * @covers ::bindParam
-     */
+    #[Test]
+    #[Group('unit')]
     public function bindParam() {
         $test = 'test';
         $this->expectException(\Exception::class);
         $this->statement->bindParam('test', $test);
     }
 
-    /**
-     * @test
-     * @group unit
-     * @covers ::errorInfo
-     */
+    #[Test]
+    #[Group('unit')]
     public function errorInfo() {
         $this->assertSame(null, $this->statement->errorInfo());
     }
 
-    /**
-     * @test
-     * @group unit
-     * @covers ::errorCode
-     */
+    #[Test]
+    #[Group('unit')]
     public function errorCode() {
         $this->assertSame(null, $this->statement->errorCode());
     }
 
-    /**
-     * @test
-     * @group unit
-     * @covers ::columnCount
-     */
+    #[Test]
+    #[Group('unit')]
     public function columnCount() {
         $this->assertSame(0, $this->statement->columnCount());
     }
 
-    /**
-     * @test
-     * @group unit
-     * @expectedException \Exception
-     * @covers ::fetchColumn
-     */
+    #[Test]
+    #[Group('unit')]
     public function fetchColumn() {
         $this->expectException(\Exception::class);
         $this->statement->fetchColumn(1);
     }
 
-    /**
-     * @test
-     * @group unit
-     * @covers ::getIterator
-     */
+    #[Test]
+    #[Group('unit')]
     public function getIterator() {
         $this->assertSame('SELECT name FROM product WHERE id=1', $this->statement->getIterator());
     }
 
-    /**
-     * @test
-     * @group unit
-     * @expectedException \Exception
-     * @covers ::fetchAll
-     */
+    #[Test]
+    #[Group('unit')]
     public function fetchAllFalseMode() {
         $this->expectException(\Exception::class);
         $this->statement->fetchAll(\PDO::FETCH_CLASS);
     }
 
-    /**
-     * @test
-     * @group unit
-     * @covers ::fetchAll
-     */
+    #[Test]
+    #[Group('unit')]
     public function fetchAll() {
         $this->assertEquals([], $this->statement->fetchAll(\PDO::FETCH_ASSOC));
     }
