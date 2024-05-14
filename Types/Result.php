@@ -30,7 +30,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @author    Tobias Hauck <tobias@circle.ai>
  * @copyright 2015 TeeAge-Beatz UG
  */
-class Result {
+class Result implements \Doctrine\DBAL\Driver\Result {
 
     /**
      * @var array
@@ -107,5 +107,52 @@ class Result {
         krsort($result);
 
         return $result;
+    }
+
+    public function fetchNumeric()
+    {
+        // TODO: Implement fetchNumeric() method.
+    }
+
+    public function fetchAssociative()
+    {
+        // TODO: Implement fetchAssociative() method.
+        return array_pop($this->result);
+    }
+
+    public function fetchOne()
+    {
+        // TODO: Implement fetchOne() method.
+    }
+
+    public function fetchAllNumeric(): array
+    {
+        // TODO: Implement fetchAllNumeric() method.
+    }
+
+    public function fetchAllAssociative(): array
+    {
+        // TODO: Implement fetchAllAssociative() method.
+    }
+
+    public function fetchFirstColumn(): array
+    {
+        // TODO: Implement fetchFirstColumn() method.
+    }
+
+    public function rowCount(): int
+    {
+        // TODO: Implement rowCount() method.
+        return count($this->result);
+    }
+
+    public function columnCount(): int
+    {
+        // TODO: Implement columnCount() method.
+    }
+
+    public function free(): void
+    {
+        // TODO: Implement free() method.
     }
 }

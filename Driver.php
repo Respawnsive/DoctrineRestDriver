@@ -24,7 +24,7 @@ use Doctrine\DBAL\Connection as AbstractConnection;
 use Doctrine\DBAL\Driver\API\ExceptionConverter;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Platforms\MySQLPlatform;
-use Doctrine\DBAL\Schema\MySqlSchemaManager;
+use Doctrine\DBAL\Schema\MySQLSchemaManager;
 
 /**
  * Rest driver class
@@ -46,18 +46,16 @@ class Driver implements DriverInterface {
      */
     public function connect(array $params, $username = null, $password = null, array $driverOptions = array()) {
         if (!empty($this->connection)) return $this->connection;
-
         $metaData         = new MetaData();
         $this->connection = new Connection($params, $this, new RoutingTable($metaData->getEntityNamespaces()));
-
-        return $this->connection;
+        return $this->connection->getNativeConnection();
     }
 
     /**
      * {@inheritdoc}
      */
     public function getDatabasePlatform() {
-        return new MySqlPlatform();
+        return new MySQLPlatform();
     }
 
     /**
@@ -66,7 +64,7 @@ class Driver implements DriverInterface {
      * @param AbstractPlatform $platform
      */
     public function getSchemaManager(AbstractConnection $conn, AbstractPlatform $platform) {
-        return new MySqlSchemaManager($conn,$platform);
+        return new MySQLSchemaManager($conn,$platform);
     }
 
     /**

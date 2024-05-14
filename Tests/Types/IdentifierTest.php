@@ -19,6 +19,7 @@
 namespace Circle\DoctrineRestDriver\Tests\Types;
 
 use Circle\DoctrineRestDriver\Types\Identifier;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use PHPSQLParser\PHPSQLParser;
 
 /**
@@ -126,7 +127,7 @@ class IdentifierTest extends \PHPUnit\Framework\TestCase {
         $parser = new PHPSQLParser();
         $tokens = $parser->parse('SELECT name FROM products WHERE id=1');
 
-        $metaDataEntry = $this->getMockBuilder('Doctrine\ORM\Mapping\ClassMetadataInfo')->disableOriginalConstructor()->getMock();
+        $metaDataEntry = $this->getMockBuilder(ClassMetadata::class)->disableOriginalConstructor()->getMock();
         $metaDataEntry
             ->expects($this->once())
             ->method('getTableName')

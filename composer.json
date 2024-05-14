@@ -22,10 +22,10 @@
     "phpmd/phpmd" : "@stable",
     "phpunit/phpunit" : "@stable",
     "symfony/yaml": "^7",
-    "sensio/framework-extra-bundle": "^6",
     "symfony/framework-bundle": "^6",
     "doctrine/doctrine-bundle": "^2",
-    "symfony/validator": "^7"
+    "symfony/validator": "^7",
+    "ext-pdo": "*"
   },
   "autoload": {
     "psr-0": {
@@ -57,7 +57,9 @@
     "ci/restclientbundle": "^3",
     "symfony/asset": "^7.0",
     "symfony/security-csrf": "^7.0",
-    "symfony/form": "^7.0"
+    "symfony/form": "^7.0",
+    "sensio/framework-extra-bundle": "^6.2",
+    "doctrine/annotations": "^2.0"
   },
   "repositories": [
     {

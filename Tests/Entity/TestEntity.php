@@ -32,34 +32,32 @@ use Circle\DoctrineRestDriver\Annotations as DataSource;
  */
 #[ORM\Entity]
 #[ORM\Table(name: 'products')]
-//#[DataSource\Select(["value" => "http://127.0.0.1:3000/app_dev.php/mockapi/products"])] // TODO voir pour que ca prenne directement la valeur !
-//#[DataSource\Select("http://127.0.0.1:3000/app_dev.php/mockapi/products")] // TODO voir pour que ca prenne directement la valeur !
-#[DataSource\Select("http://127.0.0.1:3000/app_dev.php/mockapi/products")] // TODO voir pour que ca prenne directement la valeur !
+#[DataSource\Select("http://127.0.0.1:3000/app_dev.php/mockapi/products")]
 class TestEntity {
     /**
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @var int
      */
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
+    #[ORM\Column(type: "integer")]
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=100)
      * @var string
      */
+    #[ORM\Column(type: "string", length: 100)]
     protected $name;
 
     /**
-     * @ORM\Column(type="string", length=100)
      * @var string
      */
+    #[ORM\Column(type: "string", length: 100)]
     protected $value;
 
     /**
-     * @ORM\OneToMany(targetEntity="Circle\DoctrineRestDriver\Tests\Entity\AssociatedEntity", mappedBy="product")
      * @var ArrayCollection
      */
+    #[ORM\OneToMany(targetEntity: "Circle\DoctrineRestDriver\Tests\Entity\AssociatedEntity", mappedBy: "product")]
     protected $categories;
 
     /**

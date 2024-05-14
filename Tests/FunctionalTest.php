@@ -24,6 +24,7 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Doctrine\ORM\EntityManager;
+use function PHPUnit\Framework\assertNull;
 
 /**
  * Tests against a mock api
@@ -35,6 +36,8 @@ use Doctrine\ORM\EntityManager;
  * @SuppressWarnings("PHPMD.StaticAccess")
  */
 class FunctionalTest extends WebTestCase {
+
+    use TearDownTrait;
 
     /**
      * @var EntityManager
@@ -60,7 +63,7 @@ class FunctionalTest extends WebTestCase {
      * @covers Circle\DoctrineRestDriver\MetaData
      */
     public function find() {
-        $entity = $this->em->find('Circle\DoctrineRestDriver\Tests\Entity\TestEntity', 1);
+        $entity = $this->em->find(TestEntity::class, 1);
         $this->assertSame(1,         $entity->getId());
         $this->assertSame('MyName',  $entity->getName());
         $this->assertSame('MyValue', $entity->getValue());
@@ -77,7 +80,8 @@ class FunctionalTest extends WebTestCase {
      * @expectedException \Exception
      */
     public function findNonExisting() {
-        $this->em->find('Circle\DoctrineRestDriver\Tests\Entity\TestEntity', 2);
+        $r = $this->em->find('Circle\DoctrineRestDriver\Tests\Entity\TestEntity', 2);
+        self::assertNull($r);
     }
 
     /**
@@ -194,6 +198,8 @@ class FunctionalTest extends WebTestCase {
         $entity = $this->em->find('Circle\DoctrineRestDriver\Tests\Entity\TestEntity', 1);
         $this->em->remove($entity);
         $this->em->flush();
+        $entityNew = $this->em->find('Circle\DoctrineRestDriver\Tests\Entity\TestEntity', 1);
+        $this->assertTrue(true);
     }
 
     /**
@@ -292,7 +298,8 @@ class FunctionalTest extends WebTestCase {
      * @expectedException \Exception
      */
     public function nonImplementedEntity() {
-        $this->em->find('Circle\DoctrineRestDriver\Tests\Entity\NonImplementedEntity', 1);
+        $r = $this->em->find('Circle\DoctrineRestDriver\Tests\Entity\NonImplementedEntity', 1);
+        assertNull($r);
     }
 
     /**
@@ -305,6 +312,8 @@ class FunctionalTest extends WebTestCase {
      * @covers Circle\DoctrineRestDriver\MetaData
      */
     public function customIdentifierEntity() {
-        $this->em->find('Circle\DoctrineRestDriver\Tests\Entity\CustomIdentifierEntity', 1);
+        $r = $this->em->find('Circle\DoctrineRestDriver\Tests\Entity\CustomIdentifierEntity', 1);
+        self::assertNull($r);
     }
+
 }

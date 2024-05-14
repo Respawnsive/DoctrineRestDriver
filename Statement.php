@@ -29,7 +29,7 @@ use Circle\DoctrineRestDriver\Types\Result;
 use Circle\DoctrineRestDriver\Types\SqlQuery;
 use Circle\DoctrineRestDriver\Validation\Assertions;
 use Doctrine\DBAL\Driver\Statement as StatementInterface;
-use Doctrine\DBAL\Driver\Result as ResultInterface ;
+//use Doctrine\DBAL\Driver\Result as ResultInterface ;
 /**
  * Executes the statement - sends requests to an api
  *
@@ -120,6 +120,10 @@ class Statement implements StatementInterface {
         $this->options      = $options;
     }
 
+    public function getIterator()
+    {
+        return $this->query ;
+    }
     /**
      * {@inheritdoc}
      */
@@ -157,7 +161,7 @@ class Statement implements StatementInterface {
      *
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
-    public function execute($params = null): ResultInterface
+    public function execute($params = null): Result
     {
         $query   = SqlQuery::setParams($this->query, $params !== null ? $params : $this->params);
         $request = $this->authStrategy->transformRequest($this->mysqlToRequest->transform($query));
@@ -168,7 +172,7 @@ class Statement implements StatementInterface {
             $this->result = $result->get();
             $this->id     = $result->id();
 
-            return true;
+            return $result ;
         } catch(RequestFailedException $e) {
             // as the error handling proposed by doctrine
             // does not work, we use the way of PDO_mysql
@@ -216,6 +220,9 @@ class Statement implements StatementInterface {
         $fetchMode = empty($fetchMode) ? $this->fetchMode : $fetchMode;
         Assertions::assertSupportedFetchMode($fetchMode);
 
+        if ($this->result === null)
+            $this->result = [] ;
+
         return count($this->result) === 0 ? false : array_pop($this->result);
     }
 
@@ -227,6 +234,9 @@ class Statement implements StatementInterface {
         $fetchMode = empty($fetchMode) ? $this->fetchMode : $fetchMode;
 
         while (($row = $this->fetch($fetchMode))) array_push($result, $row);
+
+        if ($this->result === null)
+            $this->result = [] ;
 
         return $result;
     }

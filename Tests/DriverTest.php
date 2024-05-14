@@ -18,11 +18,13 @@
 
 namespace Circle\DoctrineRestDriver\Tests;
 
+use Circle\DoctrineRestDriver\DriverConnection;
 use Doctrine\DBAL\Connection as AbstractConnection;
 use Circle\DoctrineRestDriver\Connection;
 use Circle\DoctrineRestDriver\Driver;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Schema\MySqlSchemaManager ;
+use Doctrine\DBAL\Platforms\MySQLPlatform;
+use Doctrine\DBAL\Schema\MySQLSchemaManager ;
 
 use PHPUnit\Framework\TestCase;
 
@@ -55,7 +57,7 @@ class DriverTest extends TestCase {
      * @covers ::getDatabasePlatform
      */
     public function getDatabasePlatform() {
-        $this->assertInstanceOf('Doctrine\DBAL\Platforms\MySqlPlatform', $this->driver->getDatabasePlatform());
+        $this->assertInstanceOf(MySQLPlatform::class, $this->driver->getDatabasePlatform());
     }
 
     /**
@@ -64,11 +66,10 @@ class DriverTest extends TestCase {
      * @covers ::getSchemaManager
      */
     public function getSchemaManager() {
-//        $connection = $this->driver->connect([],null,null,[]) ;
         $connection = $this->getMockBuilder(Connection::class)->disableOriginalConstructor()->getMock() ;
         $platform = $this->getMockBuilder(AbstractPlatform::class)->disableOriginalConstructor()->getMock();
         $actual =  $this->driver->getSchemaManager($connection,$platform) ;
-        $this->assertInstanceOf(MySqlSchemaManager::class,$actual);
+        $this->assertInstanceOf(MySQLSchemaManager::class,$actual);
     }
 
     /**
@@ -107,6 +108,6 @@ class DriverTest extends TestCase {
             'host'     => 'localhost'
         ];
         $connection = $this->driver->connect($params, null, null, $params['driverOptions']);
-        $this->assertInstanceOf('Circle\DoctrineRestDriver\Connection', $connection);
+        $this->assertInstanceOf(DriverConnection::class, $connection);
     }
 }

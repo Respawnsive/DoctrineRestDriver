@@ -18,7 +18,7 @@
 
 namespace Circle\DoctrineRestDriver\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -28,7 +28,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @author    Tobias Hauck <tobias@circle.ai>
  * @copyright 2015 TeeAge-Beatz UG
  */
-class MockController extends Controller {
+class MockController extends AbstractController {
 
     /**
      * Mock action for testing get
