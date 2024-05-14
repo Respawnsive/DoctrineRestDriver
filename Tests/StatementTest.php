@@ -64,6 +64,7 @@ class StatementTest extends \PHPUnit\Framework\TestCase {
      */
     public function bindParam() {
         $test = 'test';
+        $this->expectException(\Exception::class);
         $this->statement->bindParam('test', $test);
     }
 
@@ -101,6 +102,7 @@ class StatementTest extends \PHPUnit\Framework\TestCase {
      * @covers ::fetchColumn
      */
     public function fetchColumn() {
+        $this->expectException(\Exception::class);
         $this->statement->fetchColumn(1);
     }
 
@@ -120,6 +122,7 @@ class StatementTest extends \PHPUnit\Framework\TestCase {
      * @covers ::fetchAll
      */
     public function fetchAllFalseMode() {
+        $this->expectException(\Exception::class);
         $this->statement->fetchAll(\PDO::FETCH_CLASS);
     }
 

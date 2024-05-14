@@ -19,6 +19,7 @@
 namespace Circle\DoctrineRestDriver\Tests\Types;
 
 use Circle\DoctrineRestDriver\Types\MaybeList;
+use Circle\DoctrineRestDriver\Validation\Exceptions\InvalidTypeException;
 
 /**
  * Tests the maybe list type
@@ -51,6 +52,7 @@ class MaybeListTest extends \PHPUnit\Framework\TestCase {
      * @expectedException \Circle\DoctrineRestDriver\Validation\Exceptions\InvalidTypeException
      */
     public function assertOnException() {
+        $this->expectException(InvalidTypeException::class);
         MaybeList::assert('hello', 'string');
     }
 }

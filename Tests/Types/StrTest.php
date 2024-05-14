@@ -19,6 +19,7 @@
 namespace Circle\DoctrineRestDriver\Tests\Types;
 
 use Circle\DoctrineRestDriver\Types\Str;
+use Circle\DoctrineRestDriver\Validation\Exceptions\InvalidTypeException;
 
 /**
  * Tests the string type
@@ -50,6 +51,7 @@ class StrTest extends \PHPUnit\Framework\TestCase {
      * @expectedException \Circle\DoctrineRestDriver\Validation\Exceptions\InvalidTypeException
      */
     public function assertOnException() {
+        $this->expectException(InvalidTypeException::class);
         Str::assert([], 'array');
     }
 }

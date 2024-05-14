@@ -68,13 +68,13 @@ class MysqlToRequestTest extends \PHPUnit\Framework\TestCase {
             ->method('get')
             ->will($this->returnValue(null));
     }
-    
+
     /**
      * Create a MysqlToRequest instance with the given options.
-     * 
+     *
      * @param array $optionsOverride
      * @return MysqlToRequest
-     * 
+     *
      * @author Rob Treacy <email@roberttreacy.com>
      */
     private function createMysqlToRequest($optionsOverride = []) {
@@ -90,7 +90,7 @@ class MysqlToRequestTest extends \PHPUnit\Framework\TestCase {
                     'CURLOPT_FOLLOWLOCATION' => true,
                 ]
             ], $optionsOverride);
-        
+
         return new MysqlToRequest($options, $this->routings);
     }
 
@@ -306,7 +306,7 @@ class MysqlToRequestTest extends \PHPUnit\Framework\TestCase {
      */
     public function brokenQuery() {
         $query = 'SHIT products WHERE dirt=1';
-
+        $this->expectException(\Exception::class);
         $this->createMysqlToRequest()->transform($query);
     }
 }

@@ -19,6 +19,7 @@
 namespace Circle\DoctrineRestDriver\Tests\Types;
 
 use Circle\DoctrineRestDriver\Types\Url;
+use Circle\DoctrineRestDriver\Validation\Exceptions\InvalidTypeException;
 use PHPSQLParser\PHPSQLParser;
 
 /**
@@ -154,6 +155,7 @@ class UrlTest extends \PHPUnit\Framework\TestCase {
      * @expectedException \Circle\DoctrineRestDriver\Validation\Exceptions\InvalidTypeException
      */
     public function assertUrlOnException() {
+        $this->expectException(InvalidTypeException::class);
         Url::assert('localhost:3000', 'Url');
     }
 }

@@ -19,7 +19,15 @@
 namespace Circle\DoctrineRestDriver\Tests\Exceptions;
 
 use Circle\DoctrineRestDriver\Exceptions\Exceptions;
+use Circle\DoctrineRestDriver\Exceptions\InvalidAuthStrategyException;
+use Circle\DoctrineRestDriver\Exceptions\InvalidFormatException;
+use Circle\DoctrineRestDriver\Exceptions\InvalidSqlOperationException;
+use Circle\DoctrineRestDriver\Exceptions\MethodNotImplementedException;
+use Circle\DoctrineRestDriver\Exceptions\RequestFailedException;
+use Circle\DoctrineRestDriver\Exceptions\UnsupportedFetchModeException;
 use Circle\DoctrineRestDriver\Types\Request;
+use Circle\DoctrineRestDriver\Validation\Exceptions\InvalidTypeException;
+use Circle\DoctrineRestDriver\Validation\Exceptions\NotNilException;
 
 /**
  * Tests the exceptions trait
@@ -40,6 +48,7 @@ class ExceptionsTest extends \PHPUnit\Framework\TestCase {
      * @expectedException \Circle\DoctrineRestDriver\Validation\Exceptions\InvalidTypeException
      */
     public function invalidTypeExceptionTest() {
+        $this->expectException(InvalidTypeException::class);
         Exceptions::invalidTypeException('expected', 'key', 'value');
     }
 
@@ -50,6 +59,7 @@ class ExceptionsTest extends \PHPUnit\Framework\TestCase {
      * @expectedException \Circle\DoctrineRestDriver\Validation\Exceptions\NotNilException
      */
     public function notNilExceptionTest() {
+        $this->expectException(NotNilException::class);
         Exceptions::notNilException('test');
     }
 
@@ -63,6 +73,7 @@ class ExceptionsTest extends \PHPUnit\Framework\TestCase {
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
     public function unsupportedFetchModeExceptionTest() {
+        $this->expectException(UnsupportedFetchModeException::class);
         Exceptions::unsupportedFetchModeException(\PDO::FETCH_CLASS);
     }
 
@@ -76,6 +87,7 @@ class ExceptionsTest extends \PHPUnit\Framework\TestCase {
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
     public function methodNotImplementedExceptionTest() {
+        $this->expectException(MethodNotImplementedException::class);
         Exceptions::methodNotImplementedException('class', 'method');
     }
 
@@ -89,6 +101,7 @@ class ExceptionsTest extends \PHPUnit\Framework\TestCase {
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
     public function requestFailedExceptionTest() {
+        $this->expectException(RequestFailedException::class);
         Exceptions::requestFailedException(new Request(['method' => 'get', 'url' => 'url']), 1, 'errorMessage');
     }
 
@@ -102,6 +115,7 @@ class ExceptionsTest extends \PHPUnit\Framework\TestCase {
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
     public function invalidAuthStrategyExceptionTest() {
+        $this->expectException(InvalidAuthStrategyException::class);
         Exceptions::invalidAuthStrategyException('class');
     }
 
@@ -115,6 +129,7 @@ class ExceptionsTest extends \PHPUnit\Framework\TestCase {
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
     public function invalidSqlOperationExceptionTest() {
+        $this->expectException(InvalidSqlOperationException::class);
         Exceptions::invalidSqlOperationException('operation');
     }
 
@@ -128,6 +143,7 @@ class ExceptionsTest extends \PHPUnit\Framework\TestCase {
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
     public function invalidFormatExceptionTest() {
+        $this->expectException(InvalidFormatException::class);
         Exceptions::invalidFormatException('class');
     }
 }

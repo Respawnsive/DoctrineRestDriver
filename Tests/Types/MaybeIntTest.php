@@ -19,6 +19,7 @@
 namespace Circle\DoctrineRestDriver\Tests\Types;
 
 use Circle\DoctrineRestDriver\Types\MaybeInt;
+use Circle\DoctrineRestDriver\Validation\Exceptions\InvalidTypeException;
 
 /**
  * Tests the maybe int type
@@ -51,6 +52,7 @@ class MaybeIntTest extends \PHPUnit\Framework\TestCase {
      * @expectedException \Circle\DoctrineRestDriver\Validation\Exceptions\InvalidTypeException
      */
     public function assertOnException() {
+        $this->expectException(InvalidTypeException::class);
         MaybeInt::assert([], 'array');
     }
 }
