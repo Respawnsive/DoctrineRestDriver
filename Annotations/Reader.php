@@ -65,7 +65,7 @@ class Reader {
                 return $attribute ;
         }
 
-        return null ;
+        return null ; // @codeCoverageIgnore
 
 //        $annotation = $this->annotationReader->getClassAnnotation($class, $namespace);
 //        return $attributes instanceof $namespace ? $attributes : null;

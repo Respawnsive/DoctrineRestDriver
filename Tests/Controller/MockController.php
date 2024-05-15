@@ -37,7 +37,9 @@ class MockController extends AbstractController {
      * @return Response
      */
     public function getAction($id) {
+        if ($id == 500) return new Response('', 500);
         if ($id != 1) return new Response('', 404);
+
 
         return new Response(json_encode([
             'id'                          => 1,

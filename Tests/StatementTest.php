@@ -18,6 +18,7 @@
 
 namespace Circle\DoctrineRestDriver\Tests;
 
+use Circle\DoctrineRestDriver\Exceptions\DoctrineRestDriverException;
 use Circle\DoctrineRestDriver\Statement;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\CoversMethod;
@@ -39,12 +40,18 @@ use PHPUnit\Framework\Attributes\Test;
 #[CoversMethod(Statement::class,'fetchColumn')]
 #[CoversMethod(Statement::class,'getIterator')]
 #[CoversMethod(Statement::class,'fetchAll')]
+#[CoversMethod(Statement::class,'execute')]
+
+#[CoversMethod(Statement::class,'rowCount')]
+#[CoversMethod(Statement::class,'closeCursor')]
+
 class StatementTest extends \PHPUnit\Framework\TestCase {
 
     /**
      * @var Statement
      */
     private $statement;
+    private $statementFail;
 
     /**
      * {@inheritdoc}
@@ -64,7 +71,11 @@ class StatementTest extends \PHPUnit\Framework\TestCase {
                 'authenticator_class' => 'HttpAuthentication'
             ]
         ];
-        $this->statement = new Statement('SELECT name FROM product WHERE id=1', $params, $routings);
+        $this->statement = new Statement('SELECT name FROM products WHERE id=1', $params, $routings);
+
+        $paramsError = $params ;
+        $paramsError['host'] = 'http://127.0.0.1:3000/app_dev.php/mockapi';
+        $this->statementFail = new Statement('SELECT name FROM products WHERE id=500', $paramsError, $routings);
     }
 
     #[Test]
@@ -103,7 +114,7 @@ class StatementTest extends \PHPUnit\Framework\TestCase {
     #[Test]
     #[Group('unit')]
     public function getIterator() {
-        $this->assertSame('SELECT name FROM product WHERE id=1', $this->statement->getIterator());
+        $this->assertSame('SELECT name FROM products WHERE id=1', $this->statement->getIterator());
     }
 
     #[Test]
@@ -118,4 +129,25 @@ class StatementTest extends \PHPUnit\Framework\TestCase {
     public function fetchAll() {
         $this->assertEquals([], $this->statement->fetchAll(\PDO::FETCH_ASSOC));
     }
+
+    #[Test]
+    #[Group('unit')]
+    public function rowCount() {
+        $this->statement->fetchAll(\PDO::FETCH_ASSOC) ;
+        $this->assertIsInt(0, $this->statement->rowCount());
+    }
+
+    #[Test]
+    #[Group('unit')]
+    public function closeCursor() {
+        $this->assertIsBool(true, $this->statement->closeCursor());
+    }
+    #[Test]
+    #[Group('unit')]
+    public function executeFail() {
+        $this->expectException(DoctrineRestDriverException::class);
+        $this->statementFail->execute();
+    }
+
+
 }

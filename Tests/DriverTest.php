@@ -18,6 +18,7 @@
 
 namespace Circle\DoctrineRestDriver\Tests;
 
+use Doctrine\DBAL\Driver\API\ExceptionConverter;
 use Circle\DoctrineRestDriver\DriverConnection;
 use Doctrine\DBAL\Connection as AbstractConnection;
 use Circle\DoctrineRestDriver\Connection;
@@ -80,6 +81,13 @@ class DriverTest extends TestCase {
     public function getNameTest() {
         $this->assertSame('circle_rest', $this->driver->getName());
     }
+
+    #[Test]
+    #[Group('unit')]
+    public function getExceptionConverter() {
+        $this->assertInstanceOf(ExceptionConverter::class, $this->driver->getExceptionConverter());
+    }
+
 
     #[Test]
     #[Group('unit')]

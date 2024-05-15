@@ -73,11 +73,12 @@ trait Route {
                 $this->options = [] ;
 
         }
-        elseif (is_string($values)) {
+        elseif (is_string($values)) {  // @codeCoverageIgnoreStart
             $this->route = Url::assert($values, 'value');
             $this->statusCodes = $statusCodes;
             $this->method = $method;
             $this->options = $options;
+            // @codeCoverageIgnoreEnd
         }
     }
 

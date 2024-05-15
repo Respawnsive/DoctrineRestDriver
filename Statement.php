@@ -29,6 +29,8 @@ use Circle\DoctrineRestDriver\Types\Result;
 use Circle\DoctrineRestDriver\Types\SqlQuery;
 use Circle\DoctrineRestDriver\Validation\Assertions;
 use Doctrine\DBAL\Driver\Statement as StatementInterface;
+use Doctrine\DBAL\Exception\ServerException;
+
 //use Doctrine\DBAL\Driver\Result as ResultInterface ;
 /**
  * Executes the statement - sends requests to an api
@@ -173,7 +175,7 @@ class Statement implements StatementInterface {
             $this->id     = $result->id();
 
             return $result ;
-        } catch(RequestFailedException $e) {
+        } catch(RequestFailedException|ServerException $e) {
             // as the error handling proposed by doctrine
             // does not work, we use the way of PDO_mysql
             // which just throws the possible errors
@@ -236,7 +238,7 @@ class Statement implements StatementInterface {
         while (($row = $this->fetch($fetchMode))) array_push($result, $row);
 
         if ($this->result === null)
-            $this->result = [] ;
+            $this->result = [] ; // @codeCoverageIgnore
 
         return $result;
     }

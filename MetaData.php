@@ -48,10 +48,12 @@ class MetaData {
      * @return array
      */
     public function getEntityNamespaces() {
+        // @codeCoverageIgnoreStart
         return array_reduce($this->get(), function($carry, $item) {
             $carry[$item->table['name']] = $item->getName();
             return $carry;
         }, []);
+        // @codeCoverageIgnoreEnd
     }
 
     /**

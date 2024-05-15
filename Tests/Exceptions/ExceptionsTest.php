@@ -51,6 +51,19 @@ use PHPUnit\Framework\Attributes\Test;
 #[CoversMethod(Exceptions::class, 'invalidAuthStrategyException')]
 #[CoversMethod(Exceptions::class, 'invalidSqlOperationException')]
 #[CoversMethod(Exceptions::class, 'invalidFormatException')]
+#[CoversClass(InvalidAuthStrategyException::class)]
+#[CoversMethod(InvalidAuthStrategyException::class, '__construct')]
+#[CoversClass(InvalidFormatException::class)]
+#[CoversMethod(InvalidFormatException::class, '__construct')]
+#[CoversClass(InvalidSqlOperationException::class)]
+#[CoversMethod(InvalidSqlOperationException::class, '__construct')]
+#[CoversClass(MethodNotImplementedException::class)]
+#[CoversMethod(MethodNotImplementedException::class, '__construct')]
+#[CoversClass(RequestFailedException::class)]
+#[CoversMethod(RequestFailedException::class, '__construct')]
+#[CoversClass(UnsupportedFetchModeException::class)]
+#[CoversMethod(UnsupportedFetchModeException::class, '__construct')]
+
 class ExceptionsTest extends \PHPUnit\Framework\TestCase {
 
     #[Test]
@@ -132,4 +145,70 @@ class ExceptionsTest extends \PHPUnit\Framework\TestCase {
         $this->expectException(InvalidFormatException::class);
         Exceptions::invalidFormatException('class');
     }
+
+
+    #[Test]
+    #[Group('unit')]
+    public function invalidAuthStrategyException()
+    {
+        $this->expectException(InvalidAuthStrategyException::class);
+        Exceptions::InvalidAuthStrategyException('class');
+    }
+
+    #[Test]
+    #[Group('unit')]
+    public function invalidFormatException()
+    {
+        $this->expectException(InvalidFormatException::class);
+        Exceptions::InvalidFormatException('class');
+    }
+
+    #[Test]
+    #[Group('unit')]
+    public function invalidSqlOperationException()
+    {
+        $this->expectException(InvalidSqlOperationException::class);
+        Exceptions::InvalidSqlOperationException('operation');
+    }
+
+    #[Test]
+    #[Group('unit')]
+    public function methodNotImplementedException()
+    {
+        $this->expectException(MethodNotImplementedException::class);
+        Exceptions::MethodNotImplementedException('class', 'method');
+    }
+
+
+    #[Test]
+    #[Group('unit')]
+    public function requestFailedException()
+    {
+
+        try {
+            Exceptions::RequestFailedException(new Request(['method' => 'get', 'url' => 'url']), 1, 'errorMessage');
+        }
+        catch (RequestFailedException $e) {
+            $this->assertEquals(1, $e->getErrorCode());
+            $this->assertEquals(null, $e->getSQLState());
+        }
+
+        $this->expectException(RequestFailedException::class);
+        Exceptions::RequestFailedException(new Request(['method' => 'get', 'url' => 'url']), 1, 'errorMessage');
+
+
+
+    }
+
+    #[Test]
+    #[Group('unit')]
+    public function unsupportedFetchModeException()
+    {
+        $this->expectException(UnsupportedFetchModeException::class);
+        Exceptions::UnsupportedFetchModeException(1);
+    }
+
+
+
+
 }

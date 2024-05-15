@@ -21,6 +21,7 @@ namespace Circle\DoctrineRestDriver\Tests;
 use Circle\DoctrineRestDriver\Enums\HttpMethods;
 use Circle\DoctrineRestDriver\RestClient;
 use Circle\DoctrineRestDriver\Types\Request;
+use Doctrine\DBAL\Exception\DriverException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\CoversMethod;
 use PHPUnit\Framework\Attributes\Group;
@@ -68,5 +69,19 @@ class RestClientTest extends \PHPUnit\Framework\TestCase {
         ]));
 
         $this->assertEquals($response->getContent(), $this->restClient->send($request)->getContent());
+    }
+
+    #[Test]
+    #[Group('unit')]
+    public function sendFail() {
+        $request = new Request([
+            'method' => HttpMethods::GET,
+            'url'    => 'http://127.0.0.1:3000/app_dev.php/mockapi/products/NOT_EXIST'
+        ]);
+
+
+        $this->expectException(\Circle\DoctrineRestDriver\Exceptions\RequestFailedException::class);
+        $this->expectException(DriverException::class);
+        $this->assertEquals('', $this->restClient->send($request)->getContent());
     }
 }

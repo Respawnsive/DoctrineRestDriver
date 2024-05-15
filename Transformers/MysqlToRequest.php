@@ -82,7 +82,7 @@ class MysqlToRequest {
      */
     public function transform($query) {
         $usePatch = isset($this->options['driverOptions']['use_patch']) ? $this->options['driverOptions']['use_patch'] : false;
-        
+
         $tokens     = $this->parser->parse($query);
         $method     = HttpMethods::ofSqlOperation(SqlOperation::create($tokens), $usePatch);
         $annotation = Annotation::get($this->routings, Table::create($tokens), $method);

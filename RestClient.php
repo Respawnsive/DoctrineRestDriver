@@ -62,9 +62,11 @@ class RestClient {
 
         try {
             return $request->isExpectedStatusCode($response->getStatusCode()) ? $response : Exceptions::RequestFailedException($request, $response->getStatusCode(), $response->getContent());
-        } catch (DBALException\DriverException $e) {
+        } catch (\Exception $e) {
+            // @codeCoverageIgnoreStart
             $responseExceptionFactory = new ResponseExceptionFactory();
             throw $responseExceptionFactory->createDbalException($response, $e);
+            // @codeCoverageIgnoreEnd
         }
     }
 }

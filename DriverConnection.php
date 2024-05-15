@@ -74,8 +74,11 @@ class DriverConnection implements \Doctrine\DBAL\Driver\Connection,ServerInfoAwa
      *
      * @SuppressWarnings("PHPMD.UnusedFormalParameter")
      */
-    public function lastInsertId($seqName = null): int
+    public function lastInsertId($seqName = null): int|false
     {
+        if ($this->statement->getId() === null)
+            return false ;
+
         return $this->statement->getId();
     }
 
@@ -92,6 +95,7 @@ class DriverConnection implements \Doctrine\DBAL\Driver\Connection,ServerInfoAwa
     public function quote($value, $type = ParameterType::STRING)
     {
         // TODO: Implement quote() method.
+        return '' ;
     }
 
     public function exec(string $sql): int
@@ -119,5 +123,7 @@ class DriverConnection implements \Doctrine\DBAL\Driver\Connection,ServerInfoAwa
     public function getServerVersion()
     {
         // TODO: Implement getServerVersion() method.
+        return "X" ;
+
     }
 }
