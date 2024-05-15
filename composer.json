@@ -9,6 +9,10 @@
     {
       "name": "Circle",
       "email": "hi@circle.ai"
+    },
+    {
+      "name": "David Nurdin",
+      "email": "david.nurdin@respawnsive.com"
     }
   ],
   "keywords": [
@@ -60,11 +64,5 @@
     "symfony/form": "^7.0",
     "sensio/framework-extra-bundle": "^6.2",
     "doctrine/annotations": "^2.0"
-  },
-  "repositories": [
-    {
-      "url": "/home/david/poc/ci_rest_client/CiRestClientBundle",
-      "type": "path"
-    }
-  ]
+  }
 }
