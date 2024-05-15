@@ -28,6 +28,10 @@ use Circle\DoctrineRestDriver\Exceptions\UnsupportedFetchModeException;
 use Circle\DoctrineRestDriver\Types\Request;
 use Circle\DoctrineRestDriver\Validation\Exceptions\InvalidTypeException;
 use Circle\DoctrineRestDriver\Validation\Exceptions\NotNilException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversMethod;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Tests the exceptions trait
@@ -35,113 +39,95 @@ use Circle\DoctrineRestDriver\Validation\Exceptions\NotNilException;
  * @author    Tobias Hauck <tobias@circle.ai>
  * @copyright 2015 TeeAge-Beatz UG
  *
- * @coversDefaultClass Circle\DoctrineRestDriver\Exceptions\Exceptions
  *
  * @SuppressWarnings("PHPMD.StaticAccess")
  */
+#[CoversClass(Exceptions::class)]
+#[CoversMethod(Exceptions::class, 'invalidTypeException')]
+#[CoversMethod(Exceptions::class, 'notNilException')]
+#[CoversMethod(Exceptions::class, 'unsupportedFetchModeException')]
+#[CoversMethod(Exceptions::class, 'methodNotImplementedException')]
+#[CoversMethod(Exceptions::class, 'requestFailedException')]
+#[CoversMethod(Exceptions::class, 'invalidAuthStrategyException')]
+#[CoversMethod(Exceptions::class, 'invalidSqlOperationException')]
+#[CoversMethod(Exceptions::class, 'invalidFormatException')]
 class ExceptionsTest extends \PHPUnit\Framework\TestCase {
 
-    /**
-     * @test
-     * @group  unit
-     * @covers ::invalidTypeException
-     * @expectedException \Circle\DoctrineRestDriver\Validation\Exceptions\InvalidTypeException
-     */
+    #[Test]
+    #[Group('unit')]
     public function invalidTypeExceptionTest() {
         $this->expectException(InvalidTypeException::class);
         Exceptions::invalidTypeException('expected', 'key', 'value');
     }
 
-    /**
-     * @test
-     * @group  unit
-     * @covers ::notNilException
-     * @expectedException \Circle\DoctrineRestDriver\Validation\Exceptions\NotNilException
-     */
+    #[Test]
+    #[Group('unit')]
     public function notNilExceptionTest() {
         $this->expectException(NotNilException::class);
         Exceptions::notNilException('test');
     }
 
     /**
-     * @test
-     * @group  unit
-     * @covers ::unsupportedFetchModeException
-     * @covers Circle\DoctrineRestDriver\Exceptions\UnsupportedFetchModeException::__construct
-     * @expectedException \Circle\DoctrineRestDriver\Exceptions\UnsupportedFetchModeException
      *
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
+    #[Test]
+    #[Group('unit')]
     public function unsupportedFetchModeExceptionTest() {
         $this->expectException(UnsupportedFetchModeException::class);
         Exceptions::unsupportedFetchModeException(\PDO::FETCH_CLASS);
     }
 
     /**
-     * @test
-     * @group  unit
-     * @covers ::methodNotImplementedException
-     * @covers Circle\DoctrineRestDriver\Exceptions\MethodNotImplementedException::__construct
-     * @expectedException \Circle\DoctrineRestDriver\Exceptions\MethodNotImplementedException
      *
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
+    #[Test]
+    #[Group('unit')]
     public function methodNotImplementedExceptionTest() {
         $this->expectException(MethodNotImplementedException::class);
         Exceptions::methodNotImplementedException('class', 'method');
     }
 
     /**
-     * @test
-     * @group  unit
-     * @covers ::requestFailedException
-     * @covers Circle\DoctrineRestDriver\Exceptions\RequestFailedException::__construct
-     * @expectedException \Circle\DoctrineRestDriver\Exceptions\RequestFailedException
      *
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
+    #[Test]
+    #[Group('unit')]
     public function requestFailedExceptionTest() {
         $this->expectException(RequestFailedException::class);
         Exceptions::requestFailedException(new Request(['method' => 'get', 'url' => 'url']), 1, 'errorMessage');
     }
 
     /**
-     * @test
-     * @group  unit
-     * @covers ::invalidAuthStrategyException
-     * @covers Circle\DoctrineRestDriver\Exceptions\InvalidAuthStrategyException::__construct
-     * @expectedException \Circle\DoctrineRestDriver\Exceptions\InvalidAuthStrategyException
      *
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
+    #[Test]
+    #[Group('unit')]
     public function invalidAuthStrategyExceptionTest() {
         $this->expectException(InvalidAuthStrategyException::class);
         Exceptions::invalidAuthStrategyException('class');
     }
 
     /**
-     * @test
-     * @group  unit
-     * @covers ::invalidSqlOperationException
-     * @covers Circle\DoctrineRestDriver\Exceptions\InvalidSqlOperationException::__construct
-     * @expectedException \Circle\DoctrineRestDriver\Exceptions\InvalidSqlOperationException
      *
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
+    #[Test]
+    #[Group('unit')]
     public function invalidSqlOperationExceptionTest() {
         $this->expectException(InvalidSqlOperationException::class);
         Exceptions::invalidSqlOperationException('operation');
     }
 
     /**
-     * @test
-     * @group  unit
-     * @covers ::invalidFormatException
-     * @covers Circle\DoctrineRestDriver\Exceptions\InvalidFormatException::__construct
-     * @expectedException \Circle\DoctrineRestDriver\Exceptions\InvalidFormatException
      *
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
+    #[Test]
+    #[Group('unit')]
     public function invalidFormatExceptionTest() {
         $this->expectException(InvalidFormatException::class);
         Exceptions::invalidFormatException('class');

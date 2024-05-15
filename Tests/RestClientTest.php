@@ -21,6 +21,10 @@ namespace Circle\DoctrineRestDriver\Tests;
 use Circle\DoctrineRestDriver\Enums\HttpMethods;
 use Circle\DoctrineRestDriver\RestClient;
 use Circle\DoctrineRestDriver\Types\Request;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversMethod;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -29,8 +33,10 @@ use Symfony\Component\HttpFoundation\Response;
  * @author    Tobias Hauck <tobias@circle.ai>
  * @copyright 2015 TeeAge-Beatz UG
  *
- * @coversDefaultClass Circle\DoctrineRestDriver\RestClient
  */
+#[CoversClass(RestClient::class)]
+#[CoversMethod(RestClient::class, 'send')]
+#[CoversMethod(RestClient::class, '__construct')]
 class RestClientTest extends \PHPUnit\Framework\TestCase {
 
     /**
@@ -46,12 +52,8 @@ class RestClientTest extends \PHPUnit\Framework\TestCase {
         $this->restClient = new RestClient();
     }
 
-    /**
-     * @test
-     * @group  unit
-     * @covers ::__construct
-     * @covers ::send
-     */
+    #[Test]
+    #[Group('unit')]
     public function send() {
         $request = new Request([
             'method' => HttpMethods::GET,

@@ -22,6 +22,10 @@ use Circle\DoctrineRestDriver\Annotations\Reader;
 use Circle\DoctrineRestDriver\Annotations\Select;
 use Circle\DoctrineRestDriver\Tests\Entity\TestEntity;
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversMethod;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use ReflectionClass;
 
 /**
@@ -30,8 +34,10 @@ use ReflectionClass;
  * @author    Tobias Hauck <tobias@circle.ai>
  * @copyright 2015 TeeAge-Beatz UG
  *
- * @coversDefaultClass Circle\DoctrineRestDriver\Annotations\Reader
  */
+#[CoversClass(Reader::class)]
+#[CoversMethod(Reader::class, '__construct')]
+#[CoversMethod(Reader::class, 'read')]
 class ReaderTest extends \PHPUnit\Framework\TestCase {
 
     /**
@@ -41,26 +47,11 @@ class ReaderTest extends \PHPUnit\Framework\TestCase {
      */
     public function setUp(): void
     {
-//        AnnotationRegistry::registerFile(__DIR__ . '/../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Entity.php');
-//        AnnotationRegistry::registerFile(__DIR__ . '/../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Table.php');
-//        AnnotationRegistry::registerFile(__DIR__ . '/../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Column.php');
-//        AnnotationRegistry::registerFile(__DIR__ . '/../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Id.php');
-//        AnnotationRegistry::registerFile(__DIR__ . '/../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/GeneratedValue.php');
-//        AnnotationRegistry::registerFile(__DIR__ . '/../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/OneToMany.php');
-//        AnnotationRegistry::registerFile(__DIR__ . '/../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/ManyToOne.php');
-//        AnnotationRegistry::registerFile(__DIR__ . '/../../Annotations/Insert.php');
-//        AnnotationRegistry::registerFile(__DIR__ . '/../../Annotations/Update.php');
-//        AnnotationRegistry::registerFile(__DIR__ . '/../../Annotations/Select.php');
-//        AnnotationRegistry::registerFile(__DIR__ . '/../../Annotations/Delete.php');
-//        AnnotationRegistry::registerFile(__DIR__ . '/../../Annotations/Fetch.php');
+
     }
 
-    /**
-     * @test
-     * @group  unit
-     * @covers ::__construct
-     * @covers ::read
-     */
+    #[Test]
+    #[Group('unit')]
     public function getRoute() {
         $reader   = new Reader();
         $class    = new ReflectionClass(TestEntity::class);

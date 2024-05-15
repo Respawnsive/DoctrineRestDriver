@@ -20,6 +20,10 @@ namespace Circle\DoctrineRestDriver\Tests\Types;
 
 use Circle\DoctrineRestDriver\Types\MaybeList;
 use Circle\DoctrineRestDriver\Validation\Exceptions\InvalidTypeException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversMethod;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Tests the maybe list type
@@ -27,30 +31,29 @@ use Circle\DoctrineRestDriver\Validation\Exceptions\InvalidTypeException;
  * @author    Tobias Hauck <tobias@circle.ai>
  * @copyright 2015 TeeAge-Beatz UG
  *
- * @coversDefaultClass Circle\DoctrineRestDriver\Types\MaybeList
  */
+#[CoversClass(MaybeList::class)]
+#[CoversMethod(MaybeList::class,'assert')]
 class MaybeListTest extends \PHPUnit\Framework\TestCase {
 
     /**
-     * @test
-     * @group  unit
-     * @covers ::assert
      *
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
+    #[Test]
+    #[Group('unit')]
     public function assert() {
         $this->assertSame(null, MaybeList::assert(null, 'null'));
         $this->assertSame([], MaybeList::assert([], 'list'));
     }
 
     /**
-     * @test
-     * @group  unit
-     * @covers ::assert
      *
      * @SuppressWarnings("PHPMD.StaticAccess")
      * @expectedException \Circle\DoctrineRestDriver\Validation\Exceptions\InvalidTypeException
      */
+    #[Test]
+    #[Group('unit')]
     public function assertOnException() {
         $this->expectException(InvalidTypeException::class);
         MaybeList::assert('hello', 'string');
