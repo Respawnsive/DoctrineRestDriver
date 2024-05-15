@@ -46,6 +46,8 @@ use PHPUnit\Framework\Attributes\Test;
 #[CoversMethod(Routing::class, 'getAll')]
 class RoutingTest extends \PHPUnit\Framework\TestCase {
 
+    public Routing $routing;
+
     /**
      * {@inheritdoc}
      */

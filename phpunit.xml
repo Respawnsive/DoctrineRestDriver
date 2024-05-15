@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- http://phpunit.de/manual/4.1/en/appendixes.configuration.html -->
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.1/phpunit.xsd" displayDetailsOnTestsThatTriggerWarnings="true" backupGlobals="false" colors="true" processIsolation="false" stopOnFailure="false" bootstrap="./Tests/bootstrap.php" cacheDirectory=".phpunit.cache">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.1/phpunit.xsd" displayDetailsOnTestsThatTriggerDeprecations="true" displayDetailsOnTestsThatTriggerWarnings="true" backupGlobals="false" colors="true" processIsolation="false" stopOnFailure="false" bootstrap="./Tests/bootstrap.php" cacheDirectory=".phpunit.cache">
   <coverage>
     <report>
       <html outputDirectory="./logs/coverage" lowUpperBound="35" highLowerBound="70"/>
@@ -10,7 +10,6 @@
   <php>
     <server name="KERNEL_DIR" value="./Tests/app"/>
     <server name="KERNEL_CLASS" value="AppKernel"/>
-    <env name="SYMFONY_DEPRECATIONS_HELPER" value="disabled" />
   </php>
   <testsuites>
     <testsuite name="Project Test Suite">

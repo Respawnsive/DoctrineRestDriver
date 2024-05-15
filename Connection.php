@@ -37,6 +37,12 @@ use Doctrine\DBAL\Driver\ServerInfoAwareConnection;
 class Connection extends \Doctrine\DBAL\Connection
 {
 
+    public RoutingTable $routings;
+    public array $params ;
+    public Driver $driver ;
+    public ?Configuration $config ;
+    public ?EventManager $eventManager ;
+
 //
     public function __construct(array $params, Driver $driver, RoutingTable $routings, Configuration $config = null, EventManager $eventManager = null) {
         $this->routings = $routings;

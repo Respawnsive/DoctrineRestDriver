@@ -56,10 +56,10 @@ class HttpQuery {
 
     /**
      * Create a string of conditional parameters.
-     * 
+     *
      * @param array $tokens
      * @return string
-     * 
+     *
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
     public static function createConditionals(array $tokens) {
@@ -75,17 +75,18 @@ class HttpQuery {
             return $query . ($token['expr_type'] == 'const' ? urlencode($baseExpr) : $baseExpr);
         });
 
+        $sqlWhereString = $sqlWhereString ?? '';
         // Remove primary key column before removing table alias and returning
         return str_replace($tableAlias . '.', '', preg_replace('/' . preg_quote($primaryKeyColumn) . '=[\w\d]*&*/', '', $sqlWhereString));
     }
 
     /**
      * Create a string of pagination parameters
-     * 
+     *
      * @param array $tokens
      * @param array $options
      * @return string
-     * 
+     *
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
     public static function createPagination(array $tokens, array $options) {

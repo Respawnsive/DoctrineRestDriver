@@ -31,6 +31,11 @@ class DriverConnection implements \Doctrine\DBAL\Driver\Connection,ServerInfoAwa
 
     private $defaultFetchMode = \PDO::FETCH_ASSOC; // default fetch mode
     protected Statement $statement ;
+    public ?EventManager $eventManager;
+    public ?Configuration $config;
+    public RoutingTable $routings;
+    public array $params ;
+    public Driver $driver ;
 
     public function __construct(array $params, Driver $driver, RoutingTable $routings, Configuration $config = null, EventManager $eventManager = null)
     {
