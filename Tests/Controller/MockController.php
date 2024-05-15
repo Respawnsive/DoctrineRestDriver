@@ -113,6 +113,48 @@ class MockController extends AbstractController {
         return new Response('', 204);
     }
 
+    public function getAllCategoriesAction(Request $request) {
+
+        $result = [
+            [
+                'id'         => 1,
+                'name'       => 'CategMyName',
+                'product_id' => 1,
+            ],
+            [
+                'id'         => 2,
+                'name'       => 'CategNextName',
+                'product_id' => 1,
+            ],
+            [
+                'id'         => 3,
+                'name'       => 'OtherCategMyName',
+                'product_id' => 2,
+            ]
+        ] ;
+
+        $product_id = $request->get('product_id',null);
+
+
+        if ($product_id)
+        {
+            $results = [] ;
+
+            foreach ($result as $r)
+            {
+                if ($r['product_id'] != $product_id)
+                {
+                    $results[] = $r ;
+                }
+
+            }
+
+            $result = $results ;
+
+        }
+        return new Response(json_encode($result),200);
+    }
+
     /**
      * Mock action for testing associated entities
      *
