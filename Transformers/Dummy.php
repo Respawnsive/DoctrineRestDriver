@@ -27,9 +27,9 @@ use Circle\DoctrineRestDriver\Types\Request;
  */
 class Dummy implements Transformer {
 
-    public function transform(?array $values, Request $request)
+    public function transform(?array $content, Request $request)
     {
-        return $values ;
+        return $content ;
     }
 
     public function reverse($content)

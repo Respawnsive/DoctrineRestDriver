@@ -31,10 +31,10 @@ interface Transformer {
     /**
      * transform (encode)
      *
-     * @param  array $values
+     * @param  array $content
      * @return string
      */
-    public function transform(array $values,Request $request);
+    public function transform(array $content, Request $request);
 
     /**
      * transform (decode)
