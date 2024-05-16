@@ -170,7 +170,7 @@ class Statement implements StatementInterface {
 
         try {
             $response     = $this->restClient->send($request);
-            $result       = new Result($query, $request->getMethod(), $response, $this->options);
+            $result       = new Result($query, $request->getMethod(), $response, $this->options,$request);
             $this->result = $result->get();
             $this->id     = $result->id();
 
