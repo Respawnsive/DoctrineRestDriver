@@ -37,12 +37,54 @@ class SelectAllResult {
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
     public static function create(array $tokens, array $content) {
+        // DUCH
         $content = self::orderBy($tokens, $content);
 
-        return array_map(function($entry) use ($tokens) {
-            $row = SelectSingleResult::create($tokens, $entry);
-            return array_pop($row);
-        }, $content);
+        $joinTable = [];
+        foreach ($tokens['FROM'] as $table)
+            $joinTable[$table['table']] = true;
+        $joinTable = array_keys($joinTable);
+
+//        $content = array_map(function($entry) use ($tokens) {
+//            // Pour chaque catégorie/associations on dois doubler la ligne. // TODO Si 3 association 3 fois plus de ligne!
+//            $row = SelectSingleResult::create($tokens, $entry); // DUCH
+//            // Check JOIN
+//            return array_pop($row);
+//        }, $content);
+//
+//        dd($content);
+
+        $contentCopy = $content ;
+        $content = [] ;
+        foreach ($contentCopy as $entry)
+        {
+
+            if (count($joinTable) > 0) {
+                foreach ($joinTable as $table) {
+                    $row = SelectSingleResult::create($tokens, $entry, $joinTable)[0];
+                    $content[] = $row ;
+                }
+            }
+            else
+            {
+                $row = SelectSingleResult::create($tokens, $entry, $joinTable)[0];
+                $content[] = $row ;
+            }
+
+
+        }
+
+
+
+
+        // Pour chacune des association il faut crée les ligne du left join
+        $content[] = $content[0] ; // TEST
+        $content[0]['name_4'] = "CATEG" ; // TEST
+        $content[0]['id_3'] = 1 ; // TEST
+
+//        dd($content);
+
+        return $content ;
     }
 
     /**

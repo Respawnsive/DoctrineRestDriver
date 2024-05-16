@@ -170,9 +170,11 @@ class Statement implements StatementInterface {
 
         try {
 //            dd($request);
+            dump($request); // TODO : DUCH
             $response     = $this->restClient->send($request);
-//            dd($response->getContent());
+            dump($response->getContent());
             $result       = new Result($query, $request->getMethod(), $response, $this->options,$request);
+
             $this->result = $result->get();
             $this->id     = $result->id();
 

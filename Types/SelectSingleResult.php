@@ -36,16 +36,48 @@ class SelectSingleResult {
      *
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
-    public static function create(array $tokens, $content) {
+    public static function create(array $tokens, $content,$joinTable = null) {
+
+
+        // Suceptible d'etre lancé plusieur fois par selectAllResult , pour chaque table associé (en leftjoin)
+
         HashMap::assert($tokens, 'tokens');
         $tableAlias = Table::alias($tokens);
 
-        $attributeValueMap = array_map(function($token) use ($content, $tableAlias) {
+        // DUCH
+        $attributeValueMap = array_map(function($token) use ($content, $tableAlias,$tokens,$joinTable) {
             $key   = empty($token['alias']['name']) ? $token['base_expr'] : $token['alias']['name'];
+
+            if (str_starts_with($token['base_expr'] , 'c1_.')) // c1_.id
+            {
+                $tableName = null ;
+
+                foreach ($tokens['FROM'] as $table)
+                {
+                    if ($table['alias']['name'] == 'c1_')
+                    {
+                        $tableName= $table['table'];
+                    }
+
+                    if ($tableName) {
+                        $value = $content[$tableName][0][str_replace('c1_'  . '.', '', $token['base_expr'])] ; // pas bon
+                        return [$key => $value] ;
+                    }
+
+
+                }
+
+                // TODO c1_ << alias de "categories" , il faut retrouvé la correspondance , et ensuite $content['categories']['id'] << gerer multilevel !
+//                dump($tableAlias);
+            }
+//            dump(str_replace($tableAlias . '.', '', $token['base_expr']),$token['base_expr'],$key);
+
             $value = $content[str_replace($tableAlias . '.', '', $token['base_expr'])];
             return [$key => $value];
         }, $tokens['SELECT']);
 
-        return [ array_reduce($attributeValueMap, 'array_merge', []) ];
+        return [
+            array_reduce($attributeValueMap, 'array_merge', [])
+        ];
     }
 }
