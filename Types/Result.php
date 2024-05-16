@@ -55,12 +55,14 @@ class Result implements \Doctrine\DBAL\Driver\Result {
         $tokens = (new PHPSQLParser())->parse($query);
 
         $responseCode = $response->getStatusCode();
-
         $content = $responseCode === Response::HTTP_NO_CONTENT ? [] : Format::create($options)->decode($response->getContent());
+
+        if (!$content)
+            $content = null ;
 
         $transformer = Transform::create($options) ;
 
-        if ($transformer && $request)
+        if ($transformer && $content && $request)
             $content = $transformer->transform($content,$request);
 
         $this->result = $this->createResult($tokens, $requestMethod, $responseCode, $content);

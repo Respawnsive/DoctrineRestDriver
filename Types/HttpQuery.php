@@ -46,7 +46,6 @@ class HttpQuery {
         $operation = SqlOperation::create($tokens);
         if ($operation !== SqlOperations::SELECT) return null;
 
-
         if (!isset($options['additionalUriArgs']))
             $options['additionalUriArgs'] = [] ;
 
