@@ -46,10 +46,18 @@ class HttpQuery {
         $operation = SqlOperation::create($tokens);
         if ($operation !== SqlOperations::SELECT) return null;
 
-        $query = implode('&', array_filter([
+
+        if (!isset($options['additionalUriArgs']))
+            $options['additionalUriArgs'] = [] ;
+
+        if (is_string($options['additionalUriArgs']))
+            $options['additionalUriArgs'] = [ $options['additionalUriArgs']] ;
+
+        $query = implode('&', array_filter(array_merge([
             self::createConditionals($tokens),
             self::createPagination($tokens, $options),
-        ]));
+        ],$options['additionalUriArgs']
+        )));
 
         return $query;
     }
