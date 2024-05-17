@@ -169,10 +169,7 @@ class Statement implements StatementInterface {
         $request = $this->authStrategy->transformRequest($this->mysqlToRequest->transform($query));
 
         try {
-//            dd($request);
-            dump($request); // TODO : DUCH
             $response     = $this->restClient->send($request);
-            dump($response->getContent());
             $result       = new Result($query, $request->getMethod(), $response, $this->options,$request);
 
             $this->result = $result->get();
