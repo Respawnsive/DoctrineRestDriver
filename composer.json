@@ -26,17 +26,15 @@
     "phpmd/phpmd" : "@stable",
     "phpunit/phpunit" : "@stable",
     "symfony/yaml": "^7",
-    "symfony/framework-bundle": "^6",
+    "symfony/framework-bundle": "^7|^6",
     "doctrine/doctrine-bundle": "^2",
     "symfony/validator": "^7",
     "ext-pdo": "*"
   },
   "autoload": {
-    "psr-0": {
-      "Circle\\DoctrineRestDriver": ""
-    },
     "psr-4": {
-      "Circle\\RestClientBundle\\": "vendor/ci/restclientbundle/"
+      "Circle\\RestClientBundle\\": "vendor/ci/restclientbundle/",
+      "Circle\\DoctrineRestDriver\\": "./"
     },
     "files": [
       "Tests/app/AppKernel.php",
@@ -47,7 +45,6 @@
       "Annotations/Update.php"
     ]
   },
-  "target-dir": "Circle/DoctrineRestDriver",
   "extra": {
     "branch-alias": {
       "dev-master": "3.0.0-dev"
@@ -62,8 +59,9 @@
     "symfony/asset": "^7.0",
     "symfony/security-csrf": "^7.0",
     "symfony/form": "^7.0",
-    "sensio/framework-extra-bundle": "^6.2",
-    "doctrine/annotations": "^2.0"
+    "symfony/framework-bundle": "^7",
+    "doctrine/annotations": "^2.0",
+    "symfony/config": "^6|^7"
   },
   "repositories": [
     {
