@@ -25,6 +25,7 @@ use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection as AbstractConnection;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Driver\ServerInfoAwareConnection;
+use Doctrine\DBAL\Schema\LegacySchemaManagerFactory;
 
 
 /**
@@ -48,11 +49,21 @@ class Connection extends \Doctrine\DBAL\Connection
         $this->routings = $routings;
         $this->params = $params ;
         $this->driver = $driver ;
+        $config       ??= new Configuration();
+        $config->setSchemaManagerFactory(new LegacySchemaManagerFactory()) ;
         $this->config = $config ;
         $this->_conn = new DriverConnection($params,$driver,$routings,$config,$eventManager) ;
         parent::__construct($params, $driver, $config, $eventManager);
     }
-//
+
+    // doesnt work on warning deprecated
+//    public function createSchemaManager(): \Doctrine\DBAL\Schema\AbstractSchemaManager
+//    {
+//        $schemaManagerFactory = new LegacySchemaManagerFactory();
+//        $this->schemaManagerFactory = $schemaManagerFactory;
+//        return $schemaManagerFactory ;
+//    }
+////
 //    /**
 //     * prepares the statement execution
 //     *
