@@ -60,6 +60,8 @@ class RestClient {
         $method   = strtolower($request->getMethod());
         $response = $method === HttpMethods::GET || $method === HttpMethods::DELETE ? $this->restClient->$method($request->getUrlAndQuery(), $request->getCurlOptions()) : $this->restClient->$method($request->getUrlAndQuery(), $request->getPayload(), $request->getCurlOptions());
 
+        // dump($request->getMethod() . "=>" . $request->getUrlAndQuery()); // LOG DUCH
+
         try {
             return $request->isExpectedStatusCode($response->getStatusCode()) ? $response : Exceptions::RequestFailedException($request, $response->getStatusCode(), $response->getContent());
         } catch (\Exception $e) {

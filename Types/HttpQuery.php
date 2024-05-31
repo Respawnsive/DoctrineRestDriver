@@ -44,13 +44,15 @@ class HttpQuery {
         HashMap::assert($tokens, 'tokens');
 
         $operation = SqlOperation::create($tokens);
-        if ($operation !== SqlOperations::SELECT) return null;
 
         if (!isset($options['additionalUriArgs']))
             $options['additionalUriArgs'] = [] ;
 
         if (is_string($options['additionalUriArgs']))
             $options['additionalUriArgs'] = [ $options['additionalUriArgs']] ;
+
+        if ($operation !== SqlOperations::SELECT)
+            return implode('&',$options['additionalUriArgs']);
 
         $query = implode('&', array_filter(array_merge([
             self::createConditionals($tokens),
