@@ -65,7 +65,12 @@ trait Route {
 
         if (is_array($values)) {
             $settings = new ArrayCollection($values);
-            $this->route = Url::assert($settings->get('value'), 'value');
+//            $this->route = Url::assert($settings->get('value'), 'value');
+            if (substr($values,0,1) === "/")
+                $this->route = substr($settings->get('value'),1);
+            else
+                $this->route = Url::assert($settings->get('value'), 'value');
+            // permet absolute "/"
             $this->statusCodes = MaybeList::assert($settings->get('statusCodes'), 'statusCodes');
             $this->method = MaybeString::assert($settings->get('method'), 'method');
             $this->options = MaybeList::assert($settings->get('options'), 'options');
@@ -74,7 +79,11 @@ trait Route {
 
         }
         elseif (is_string($values)) {  // @codeCoverageIgnoreStart
-            $this->route = Url::assert($values, 'value');
+            if (substr($values,0,1) === "/")
+                $this->route = substr($values,1);
+            else
+                $this->route = Url::assert($values, 'value');
+            // permet absolute "/"
             $this->statusCodes = $statusCodes;
             $this->method = $method;
             $this->options = $options;
