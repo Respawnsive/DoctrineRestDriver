@@ -45,6 +45,11 @@ class Driver implements DriverInterface {
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
     public function connect(array $params, $username = null, $password = null, array $driverOptions = array()) {
+        if (!isset($params['serverVersion']))
+        {
+            throw new (\Exception('serverVersion is required in doctrine config server_version : "X"'));
+        }
+
         if (!empty($this->connection)) return $this->connection;
         $metaData         = new MetaData();
         $this->connection = new Connection($params, $this, new RoutingTable($metaData->getEntityNamespaces()));

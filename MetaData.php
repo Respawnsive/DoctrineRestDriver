@@ -18,7 +18,8 @@
 
 namespace Circle\DoctrineRestDriver;
 
-use Doctrine\Common\Persistence\ObjectManager;
+
+use Doctrine\Persistence\ObjectManager;
 
 /**
  * Provider for doctrine meta data

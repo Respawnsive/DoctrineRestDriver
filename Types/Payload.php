@@ -44,9 +44,40 @@ class Payload {
         $format    = Format::create($options);
         $operation = SqlOperation::create($tokens);
 
-        if ($operation === SqlOperations::INSERT) return $format->encode(InsertChangeSet::create($tokens));
-        if ($operation === SqlOperations::UPDATE) return $format->encode(UpdateChangeSet::create($tokens));
 
-        return null;
+
+        $ret = null ;
+
+        if ($operation === SqlOperations::INSERT)
+            $input = InsertChangeSet::create($tokens) ;
+
+        if ($operation === SqlOperations::UPDATE)
+            $input = UpdateChangeSet::create($tokens) ;
+
+        if ($operation === SqlOperations::INSERT || $operation === SqlOperations::UPDATE) {
+            $transformer = Transform::create($options);
+
+            $method = "post" ;
+            $annotation = null ;
+
+            // todo voir si on fait in "insert","update" ect ..
+            if ($transformer && $input)
+                $input = $transformer->transform($input,
+                    new Request([
+                        'method'              => HttpMethod::create($method, $annotation),
+                        'url'                 => Url::createFromTokens($tokens, $options['host'], $annotation),
+                        'curlOptions'         => CurlOptions::create(array_merge($options['driverOptions'], HttpHeader::create($options['driverOptions'], $tokens))),
+                        'query'               => HttpQuery::create($tokens, $options['driverOptions']),
+                        'payload'             => $operation,
+                        'expectedStatusCodes' => StatusCode::create($method, $annotation)
+                    ])) ;
+
+
+            $ret = $format->encode($input);
+        }
+
+
+        return $ret ;
+
     }
 }
