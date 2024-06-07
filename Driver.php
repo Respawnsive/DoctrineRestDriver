@@ -38,6 +38,8 @@ class Driver implements DriverInterface {
      * @var Connection
      */
     private $connection;
+    private MetaData $metaData ;
+
 
     /**
      * {@inheritdoc}
@@ -51,8 +53,8 @@ class Driver implements DriverInterface {
         }
 
         if (!empty($this->connection)) return $this->connection;
-        $metaData         = new MetaData();
-        $this->connection = new Connection($params, $this, new RoutingTable($metaData->getEntityNamespaces()));
+//        $metaData         = new MetaData();
+        $this->connection = new Connection($params, $this, new RoutingTable($this->metaData->getEntityNamespaces()));
         return $this->connection->getNativeConnection();
     }
 
@@ -60,6 +62,9 @@ class Driver implements DriverInterface {
      * {@inheritdoc}
      */
     public function getDatabasePlatform() {
+        // get entitymanager if exist
+        $metaData         = new MetaData(); // must be here (maybe construct?)
+        $this->metaData = $metaData;
         return new MySQLPlatform();
     }
 

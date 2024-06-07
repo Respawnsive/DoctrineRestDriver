@@ -119,11 +119,9 @@ class DriverConnection implements \Doctrine\DBAL\Driver\Connection,ServerInfoAwa
         return true;
     }
 
-
     public function getServerVersion()
     {
-        // TODO: Implement getServerVersion() method.
         return "X" ;
-
     }
+
 }
