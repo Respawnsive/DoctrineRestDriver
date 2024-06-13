@@ -44,8 +44,6 @@ class Payload {
         $format    = Format::create($options);
         $operation = SqlOperation::create($tokens);
 
-
-
         $ret = null ;
 
         if ($operation === SqlOperations::INSERT)
@@ -60,7 +58,6 @@ class Payload {
             $method = "post" ;
             $annotation = null ;
 
-            // todo voir si on fait in "insert","update" ect ..
             if ($transformer && $input)
                 $input = $transformer->transform($input,
                     new Request([
@@ -71,7 +68,6 @@ class Payload {
                         'payload'             => $operation,
                         'expectedStatusCodes' => StatusCode::create($method, $annotation)
                     ])) ;
-
 
             $ret = $format->encode($input);
         }

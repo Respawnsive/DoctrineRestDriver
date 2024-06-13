@@ -168,8 +168,12 @@ class Statement implements StatementInterface {
         $query   = SqlQuery::setParams($this->query, $params !== null ? $params : $this->params);
         $request = $this->authStrategy->transformRequest($this->mysqlToRequest->transform($query));
 
+//        dump($request->getUrlAndQuery());
+
         try {
             $response     = $this->restClient->send($request);
+//            dump($response->getContent());
+
             $result       = new Result($query, $request->getMethod(), $response, $this->options,$request);
 
             $this->result = $result->get();

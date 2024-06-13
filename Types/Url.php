@@ -70,6 +70,9 @@ class Url {
         $id    = Identifier::create($tokens);
         $route = empty($annotation) || $annotation->getRoute() === null ? Table::create($tokens) : $annotation->getRoute();
 
+        if (($annotation) && (isset($annotation->getOptions()['disableIdInUrl']) && $annotation->getOptions()['disableIdInUrl']))
+            $id = null ;
+
         return self::create($route, $apiUrl, $id);
     }
 
