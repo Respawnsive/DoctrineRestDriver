@@ -64,7 +64,8 @@ class Driver implements DriverInterface {
     public function getDatabasePlatform() {
         // get entitymanager if exist
         $metaData         = new MetaData(); // must be here (maybe construct?)
-        $this->metaData = $metaData;
+        if (!isset($this->metaData))
+            $this->metaData = $metaData;
         return new MySQLPlatform();
     }
 
