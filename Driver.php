@@ -40,7 +40,6 @@ class Driver implements DriverInterface {
     private $connection;
     private MetaData $metaData ;
 
-
     /**
      * {@inheritdoc}
      *

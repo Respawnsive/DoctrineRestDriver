@@ -38,7 +38,7 @@ class Payload {
      *
      * @SuppressWarnings("PHPMD.StaticAccess")
      */
-    public static function create(array $tokens, array $options) {
+    public static function create(array $tokens, array $options,$annotation = null) {
         HashMap::assert($tokens, 'tokens');
 
         $format    = Format::create($options);
@@ -56,7 +56,6 @@ class Payload {
             $transformer = Transform::create($options);
 
             $method = "post" ;
-            $annotation = null ;
 
             if ($transformer && $input)
                 $input = $transformer->transform($input,
@@ -65,7 +64,7 @@ class Payload {
                         'url'                 => Url::createFromTokens($tokens, $options['host'], $annotation),
                         'curlOptions'         => CurlOptions::create(array_merge($options['driverOptions'], HttpHeader::create($options['driverOptions'], $tokens))),
                         'query'               => HttpQuery::create($tokens, $options['driverOptions']),
-                        'payload'             => $operation,
+                        'payload'             => [ 'operation'=> $operation , 'token' =>  $tokens ] ,
                         'expectedStatusCodes' => StatusCode::create($method, $annotation)
                     ])) ;
 

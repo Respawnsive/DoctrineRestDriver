@@ -166,7 +166,8 @@ class Statement implements StatementInterface {
     public function execute($params = null): Result
     {
         $query   = SqlQuery::setParams($this->query, $params !== null ? $params : $this->params);
-        $request = $this->authStrategy->transformRequest($this->mysqlToRequest->transform($query));
+        $tmp = $this->mysqlToRequest->transform($query) ;
+        $request = $this->authStrategy->transformRequest($tmp);
 
 //        dump($request->getUrlAndQuery());
 
@@ -174,6 +175,11 @@ class Statement implements StatementInterface {
             $response     = $this->restClient->send($request);
 //            dump($response->getContent());
 
+            if ($response->getStatusCode() == 401)
+            {
+                $debug = 1 ;
+
+            }
             $result       = new Result($query, $request->getMethod(), $response, $this->options,$request);
 
             $this->result = $result->get();

@@ -72,6 +72,24 @@ class Reader {
 //        return $annotation instanceof $namespace ? $annotation : null;
     }
 
+    public function readAll(\ReflectionClass $class, $namespace) {
+
+        $attributes = $this->getClassAttributes($class);
+
+        $return = [] ;
+
+        foreach ($attributes as $attribute)
+        {
+            if ($attribute instanceof $namespace) {
+                if (!str_starts_with($attribute::class,__NAMESPACE__))
+                    $return[$attribute::class] = $attribute;
+            }
+        }
+
+        return $return ;
+
+    }
+
     /**
      * @psalm-return class-string-map<T, T|RepeatableAttributeCollection<T>>
      *

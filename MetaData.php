@@ -19,6 +19,7 @@
 namespace Circle\DoctrineRestDriver;
 
 
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface;
 use Doctrine\Persistence\ObjectManager;
 
 /**
@@ -34,13 +35,44 @@ class MetaData {
      */
     private $em;
 
+    public function getEm(): ObjectManager|array
+    {
+        return $this->em;
+    }
+
+
     /**
      * MetaData constructor
      */
     public function __construct() {
-        $this->em = array_filter(debug_backtrace(), function($trace) {
+        $backtrace = debug_backtrace();
+
+        $this->em = array_filter($backtrace, function($trace) {
             return isset($trace['object']) && $trace['object'] instanceof ObjectManager;
         });
+
+        if (count($this->em) == 0)
+        {
+
+            $ems =  array_filter($backtrace, function($trace) {
+                return isset($trace['object']) && $trace['object'] instanceof ServiceEntityRepositoryInterface;
+            });
+
+            if (count($ems) > 0) {
+                $firstEntityRepo = array_shift($ems) ;
+
+                if (isset($firstEntityRepo['object'])) {
+                    $firstEntityRepo = $firstEntityRepo['object'];
+                    /** @var ServiceEntityRepository $firstEntityRepo */
+                    if ($firstEntityRepo !== null) {
+                        $qb = $firstEntityRepo->createQueryBuilder(''); //
+                        $this->em = $qb->getEntityManager();
+                    }
+                }
+
+            }
+
+        }
     }
 
     /**
@@ -63,6 +95,10 @@ class MetaData {
      * @return array
      */
     public function get() {
+        if ($this->em instanceof ObjectManager) {
+            return $this->em->getMetaDataFactory()->getAllMetaData();
+        }
+
         return empty($this->em) ? [] : array_pop($this->em)['object']->getMetaDataFactory()->getAllMetaData();
     }
 }
