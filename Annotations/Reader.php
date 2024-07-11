@@ -65,6 +65,13 @@ class Reader {
                 return $attribute ;
         }
 
+        // get inherited annotations
+        $parent = $class->getParentClass();
+        if ($parent !== false) {
+            return $this->read($parent, $namespace);
+        }
+
+
         return null ; // @codeCoverageIgnore
 
 //        $annotation = $this->annotationReader->getClassAnnotation($class, $namespace);

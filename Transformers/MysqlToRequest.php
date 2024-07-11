@@ -93,6 +93,8 @@ class MysqlToRequest {
         $customs = Annotation::get($this->routings, Table::create($tokens),'customs') ;
         $annotation = null ;
 
+        // TODO : proprement.
+        
         foreach ($customs as $custom) {
             if (isset($tokens['SET'][0]['sub_tree'][2]['base_expr'])) {
                 $classTest = ($custom::$functionClass) ;

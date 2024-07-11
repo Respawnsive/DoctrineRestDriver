@@ -19,6 +19,7 @@
 namespace Circle\DoctrineRestDriver\Types;
 
 use Circle\DoctrineRestDriver\Enums\SqlOperations;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Payload type: Union type for InsertChangeSet and InsertChangeSet
