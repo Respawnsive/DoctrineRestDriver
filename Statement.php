@@ -169,6 +169,7 @@ class Statement implements StatementInterface {
         $tmp = $this->mysqlToRequest->transform($query) ;
         $request = $this->authStrategy->transformRequest($tmp);
 
+
 //        dump($request->getUrlAndQuery());
 
         try {
