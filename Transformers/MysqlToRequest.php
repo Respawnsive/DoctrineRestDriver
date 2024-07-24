@@ -95,14 +95,16 @@ class MysqlToRequest {
 
         // TODO : proprement.
 
-        foreach ($customs as $custom) {
-            if (isset($tokens['SET'][0]['sub_tree'][2]['base_expr'])) {
-                $classTest = ($custom::$functionClass) ;
-                $classTest = new $classTest('') ;
+        if ($customs) {
+            foreach ($customs as $custom) {
+                if (isset($tokens['SET'][0]['sub_tree'][2]['base_expr'])) {
+                    $classTest = ($custom::$functionClass);
+                    $classTest = new $classTest('');
 
-                if ($tokens['SET'][0]['sub_tree'][2]['base_expr'] == $classTest::$functionName) {
-//                $annotation = Annotation::get($this->routings, Table::create($tokens), 'FLAG');
-                    $annotation = Annotation::get($this->routings, Table::create($tokens), $custom::class);
+                    if ($tokens['SET'][0]['sub_tree'][2]['base_expr'] == $classTest::$functionName) {
+                        //                $annotation = Annotation::get($this->routings, Table::create($tokens), 'FLAG');
+                        $annotation = Annotation::get($this->routings, Table::create($tokens), $custom::class);
+                    }
                 }
             }
         }
